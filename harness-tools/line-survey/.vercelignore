@@ -1,0 +1,12 @@
+# Vercel に上げない物（.vercelignore があると .gitignore は使われない＝config/ と public/ は上がる）
+.env*
+products/
+test/
+setup/
+images/
+build/
+schema/
+templates/
+theme/
+scripts/
+*.md

@@ -1,0 +1,23 @@
+Create a polished Japanese direct-response Instagram ad image, 4:5 portrait, in the same design style as the FIRST reference image (layout, decorative bold mincho/serif headline with very large emphasized words, soft bokeh background, person photo on one side, product photo, small circular badges, a ribbon tag, and a bold full-width call-to-action band at the bottom). Do NOT copy the reference's product or text.
+
+Inputs:
+- SECOND image: the woman (a Japanese animal shelter director). Keep her face and clothing exactly; place her on the right side, cut out, chest-up, gentle smile.
+- THIRD image: the product — grey dog toilet pad with white bone pattern with a dog sitting on it. Place it at the lower left.
+- FOURTH image: the brand logo 「ワンドライ」, small at the top-left exactly as given.
+
+Palette: deep navy (#1e3a6e), warm cream background with soft light-blue bokeh, coral-red accents.
+
+Japanese text (render EXACTLY these characters, nothing else):
+1. Headline (left, 3 lines, bold mincho):
+   「叱った日から、」 (navy, medium)
+   「ソファーの裏に」 (very large, ソファーの裏 in coral-red)
+   「移りました。」 (navy, large)
+2. Sub copy: 「叱っても、トイレの場所は覚えません」
+3. Three round white badges in a row (emphasized word in coral):
+   「叱らなくて / いい」  「においで / 伝える」  「敷くだけ / 今日から」
+4. Ribbon tag next to the woman (navy band, white text): 「元 保護センター施設長が解説」
+5. Small caption under the woman: 「岸本 早苗」
+6. Bottom full-width coral-red band, white bold text: 「叱らない方法を記事でチェック！ ▶」
+7. Tiny text bottom-right: 「※イメージ」
+
+No English, no prices, no medical claims, no misspelled or extra characters.

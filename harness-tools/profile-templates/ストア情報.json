@@ -1,0 +1,46 @@
+{
+ "_説明": "お店の情報。店ごとに1つ。Shopify から読める物は probe-store.mjs が先に埋める。 値は全部空（null）で置く。初期値は ~/.agents/skills/ec-ad-ops/scripts/store-legal/questions.json にあり、運営者が「初期値でよい」と答えた物だけ AI が入れる。",
+ "shop_name": null,
+ "store_url": null,
+ "myshopify_domain": null,
+ "contact_path": null,
+ "cs_email": null,
+ "payment_methods": [],
+ "deferred_payment": null,
+ "shipping_fee": null,
+ "ship_days": null,
+ "delivery_days": {
+  "usual": null,
+  "max": null
+ },
+ "delivery_watch": {
+  "no_ship_notice": null,
+  "normal": null,
+  "lost_after": null
+ },
+ "ship_origin": null,
+ "cross_border": null,
+ "cancel_refund_timing": null,
+ "refund_max_days": null,
+ "cs_reply": null,
+ "privacy_processors": [],
+ "supplier": {
+  "name": null,
+  "role_label": null,
+  "channel": null,
+  "address": null,
+  "our_name": null
+ },
+ "theme": {
+  "primary": null,
+  "accent": null,
+  "text": null,
+  "border": null,
+  "soft": null
+ },
+ "shopify": {
+  "token_env": null,
+  "theme_id": null
+ },
+ "line_url": null
+}

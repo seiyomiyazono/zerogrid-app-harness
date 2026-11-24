@@ -1,0 +1,23 @@
+Create a polished Japanese direct-response Instagram ad image, 4:5 portrait, in the same design style as the FIRST reference image (big decorative headline with a very large emphasized word in gradient color, sub copy, three round badges with numbers/short words, person photo on the right, product photo, and a bold full-width call-to-action band). Do NOT copy the reference's product or text.
+
+Inputs:
+- SECOND image: the woman, a Japanese veterinarian in a white coat. Keep her face and clothing exactly; place her on the right side, cut out, chest-up, confident gentle smile.
+- THIRD image: the product — grey dog toilet pad with white bone pattern with a dog sitting on it. Place it at the lower right in front of her.
+- FOURTH image: the brand logo 「ワンドライ」, small at the top-left exactly as given.
+
+Palette: deep navy (#1e3a6e), clean white-cream background with soft bokeh, coral-red accents.
+
+Japanese text (render EXACTLY these characters, nothing else):
+1. Small line above headline: 「スプレー、人工芝、しつけ教室。」
+2. Headline (left, bold mincho, 2 lines):
+   「全部試したのに」 (very large, 全部 in coral-red gradient)
+   「直らなかった方へ」 (navy, large)
+3. Sub copy: 「足りなかったのは、いつもの場所の「においの目印」」
+4. Three round white badges in a row (emphasized word in coral):
+   「スプレーは / すぐ消える」  「人工芝は / 家で続かない」  「敷くだけで / においで伝える」
+5. Ribbon tag next to the woman (navy band, white text): 「獣医師が解説」
+6. Small caption under the woman: 「美馬 遥」
+7. Bottom full-width coral-red band, white bold text: 「今すぐチェック！ ▶」
+8. Tiny text bottom-right: 「※イメージ」
+
+No English, no prices, no medical claims, no misspelled or extra characters.

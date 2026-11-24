@@ -1,0 +1,254 @@
+<title>ワンドライ 配信前の広告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=BIZ+UDPGothic:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* 広告マネージャの形：上に キャンペーン／広告セット／広告 の表、下に広告ごとの詳細（プレビュー・入稿項目・原稿と素材） */
+:root{
+  --bg:#f3f4f6; --card:#ffffff; --ink:#1c2b33; --sub:#5f6b75; --line:#dfe3e8; --wash:#f0f2f5; --hover:#f5f8fb;
+  --blue:#0a66c2; --blue-wash:#e7f0fa; --on-blue:#ffffff;
+  --made:#1e7d4f; --made-wash:#e3f4ea; --todo:#8a6200; --todo-wash:#fbf0d6; --off:#8a949c;
+  --ai:#6b46c1; --ai-wash:#efe8fb; --yt:#c0392b; --yt-wash:#fbe9e6; --own:#2c6e9b; --own-wash:#e4eff7; --free:#2f7d6b; --free-wash:#e0f1ec; --edit:#7a6a3a; --edit-wash:#f2eddc; --av:#1f6f5c; --av-wash:#e3f0eb;
+  --display:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --body:"BIZ UDPGothic","Hiragino Sans","Yu Gothic",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14191d; --card:#1c2328; --ink:#e7ebee; --sub:#a2acb4; --line:#2d363d; --wash:#232b31; --hover:#222b31;
+  --blue:#6aa9ec; --blue-wash:#1b2c3e; --on-blue:#0d1a26;
+  --made:#5cc98f; --made-wash:#173327; --todo:#e3b04f; --todo-wash:#3a2f17; --off:#7c868d;
+  --ai:#b39af0; --ai-wash:#2c2440; --yt:#f08a7d; --yt-wash:#3b2220; --own:#7fb7e0; --own-wash:#1d2f3d; --free:#6fd0b8; --free-wash:#173530; --edit:#d6c48f; --edit-wash:#33301f; --av:#5cc3a6; --av-wash:#1c3a33; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14191d; --card:#1c2328; --ink:#e7ebee; --sub:#a2acb4; --line:#2d363d; --wash:#232b31; --hover:#222b31;
+  --blue:#6aa9ec; --blue-wash:#1b2c3e; --on-blue:#0d1a26;
+  --made:#5cc98f; --made-wash:#173327; --todo:#e3b04f; --todo-wash:#3a2f17; --off:#7c868d;
+  --ai:#b39af0; --ai-wash:#2c2440; --yt:#f08a7d; --yt-wash:#3b2220; --own:#7fb7e0; --own-wash:#1d2f3d; --free:#6fd0b8; --free-wash:#173530; --edit:#d6c48f; --edit-wash:#33301f; --av:#5cc3a6; --av-wash:#1c3a33; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.65}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:20px;padding-block:0 64px}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.35;text-wrap:balance}
+header.top{background:var(--card);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;padding-block:14px}
+.brand{font-family:var(--display);font-weight:900;font-size:18px}
+.brand small{display:block;font-family:var(--body);font-weight:400;font-size:12px;color:var(--sub)}
+.sum{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:12.5px;border-radius:999px;padding:4px 12px;background:var(--wash);font-variant-numeric:tabular-nums}
+.pill b{font-size:15px;margin-left:4px;font-family:var(--display)}
+.pill.made{background:var(--made-wash);color:var(--made)} .pill.todo{background:var(--todo-wash);color:var(--todo)}
+.camp{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center}
+.camp .lv{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:.06em}
+.camp h2{font-size:16px}
+.camp .kv{font-size:12.5px;color:var(--sub)} .camp .kv b{color:var(--ink);font-variant-numeric:tabular-nums}
+.toggle{display:inline-block;width:30px;height:16px;border-radius:999px;background:var(--off);position:relative;vertical-align:middle}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--card)}
+.mgr{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.tabs{display:flex;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{font:inherit;font-family:var(--display);font-weight:700;font-size:13.5px;background:none;border:0;border-bottom:3px solid transparent;color:var(--sub);padding:11px 18px;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--blue);border-bottom-color:var(--blue)}
+.tabs button .c{font-family:var(--mono);font-size:11.5px;margin-left:6px;color:var(--sub)}
+.tools{display:flex;flex-wrap:wrap;gap:8px 14px;padding:10px 14px;border-bottom:1px solid var(--line);align-items:center;background:var(--wash)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chips button{font:inherit;font-size:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:3px 11px;cursor:pointer;white-space:nowrap}
+.chips button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.tools label{font-size:12px;color:var(--sub);display:flex;gap:6px;align-items:center}
+.tools select{font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:6px;padding:3px 8px;background:var(--card);color:var(--ink)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;vertical-align:middle;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font-size:12px;font-weight:700;color:var(--sub);background:var(--card);white-space:nowrap;font-family:var(--display)}
+.mgr tbody tr{cursor:pointer}
+.mgr tbody tr:hover{background:var(--hover)}
+tr:focus-visible,button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+td.nm{min-width:260px}
+td.nm a{color:var(--blue);text-decoration:none;font-weight:700}
+td.nm a:hover{text-decoration:underline}
+td.nm .s{display:block;font-size:12px;color:var(--sub);font-weight:400}
+.th{width:44px;height:55px;border-radius:5px;object-fit:cover;display:block;background:var(--wash)}
+.thph{width:44px;height:55px;border-radius:5px;display:grid;place-items:center;font-size:10px;color:var(--sub);background:var(--wash);border:1px dashed var(--line)}
+.pk{font-family:var(--mono);font-size:11.5px;font-weight:500;border-radius:4px;padding:1px 7px;background:var(--blue-wash);color:var(--blue);white-space:nowrap}
+.stt{font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;white-space:nowrap;display:inline-flex;align-items:center;gap:5px}
+.stt::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.stt.made{background:var(--made-wash);color:var(--made)} .stt.todo{background:var(--todo-wash);color:var(--todo)}
+.reg{font-size:11px;color:var(--sub);display:block;margin-top:2px}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.prog{display:flex;align-items:center;gap:8px;min-width:170px}
+.prog .b{flex:1;height:6px;border-radius:3px;background:var(--wash);overflow:hidden;min-width:60px}
+.prog .b i{display:block;height:100%;background:var(--made)}
+.prog span{font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.layer{font-size:12.5px;color:var(--sub);min-width:200px}
+.hint{font-size:12px;color:var(--sub);padding:8px 14px}
+section.details{margin-top:30px}
+.sh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.sh h2{font-size:18px;font-weight:900}
+.sh span{font-size:12.5px;color:var(--sub)}
+.group{margin-top:22px}
+.group h3{font-size:15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-bottom:8px;border-bottom:2px solid var(--ink);margin-bottom:12px}
+.group h3 .l{font-family:var(--body);font-weight:400;font-size:12.5px;color:var(--sub)}
+.adc{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:14px;scroll-margin-top:16px;overflow:hidden}
+.adc.flash{box-shadow:0 0 0 3px var(--blue)}
+.adtop{display:grid;grid-template-columns:240px minmax(0,1fr);gap:18px;padding:16px}
+.pv{min-width:0}
+.pv video,.pv img{width:100%;max-width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px;display:block;background:#000}
+.pv .none{aspect-ratio:4/5;border-radius:8px;border:1px dashed var(--line);display:grid;place-items:center;text-align:center;color:var(--sub);font-size:12.5px;padding:12px;background:var(--wash)}
+.parts{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.parts button{font:inherit;font-size:11.5px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:1px 9px;cursor:pointer}
+.parts button[aria-pressed="true"]{background:var(--blue);color:var(--on-blue);border-color:var(--blue)}
+.fields{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 12px;align-content:start;font-size:13px;margin:0}
+.fields dt{color:var(--sub);font-size:12px;padding-top:1px}
+.fields dd{margin:0;min-width:0}
+.fields .big{font-family:var(--display);font-weight:900;font-size:17px}
+.primary{white-space:pre-wrap;background:var(--wash);border-radius:8px;padding:8px 11px;font-size:13px}
+details.gen{border-top:1px solid var(--line)}
+details.gen>summary{list-style:none;cursor:pointer;padding:10px 16px;font-family:var(--display);font-weight:700;font-size:13.5px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+details.gen>summary::-webkit-details-marker{display:none}
+details.gen>summary::before{content:"▸";color:var(--sub)}
+details.gen[open]>summary::before{content:"▾"}
+.kc{font-size:11px;font-weight:700;border-radius:5px;padding:0 7px;white-space:nowrap;font-family:var(--body)}
+.k-own,.k-comp{background:var(--own-wash);color:var(--own)} .k-free{background:var(--free-wash);color:var(--free)} .k-youtube{background:var(--yt-wash);color:var(--yt)}
+.k-ai{background:var(--ai-wash);color:var(--ai)} .k-edit{background:var(--edit-wash);color:var(--edit)} .k-avatar{background:var(--av-wash);color:var(--av)}
+.script td{vertical-align:top;font-size:13px}
+.script td.t{font-family:var(--mono);font-size:12px;color:var(--sub);white-space:nowrap}
+.script td.sec{font-size:12px;color:var(--sub);white-space:nowrap}
+.script td.line{min-width:240px}
+.script td.vis{min-width:140px;font-size:12.5px;color:var(--sub)}
+.script td.as{min-width:230px;width:270px}
+.script td.made img{width:84px;border-radius:5px;aspect-ratio:4/5;object-fit:cover;display:block}
+.asset{display:flex;gap:9px;align-items:flex-start}
+.asset img{width:58px;height:58px;object-fit:cover;border-radius:6px;flex:none;background:var(--wash)}
+.asset .ph{width:58px;height:58px;border-radius:6px;flex:none;display:grid;place-items:center;font-size:10px;font-weight:700;text-align:center;line-height:1.3;padding:3px}
+.asset .tx{min-width:0;font-size:12px}
+.asset .lbl{display:block;margin-top:2px}
+.asset .rs{display:block;color:var(--sub);margin-top:2px}
+.asset.ai .rs{color:var(--ai)}
+.empty{padding:30px 16px;color:var(--sub)}
+@media (max-width:760px){.adtop{grid-template-columns:1fr}.pv{max-width:260px}.fields{grid-template-columns:90px minmax(0,1fr)}.sum{margin-left:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="brand">ワンドライ 配信前の広告<small>広告を始める前にそろえる動画・静止画と原稿</small></div>
+  <div class="sum" id="sum"></div>
+</div></header>
+
+<main class="wrap" id="app"><div class="empty">広告の一覧を読み込んでいます…</div></main>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const KIND = {own:'自社の素材庫', comp:'参考広告の素材', free:'フリー素材', youtube:'YouTubeで探す', ai:'AIで生成', edit:'編集で作る', avatar:'口パク（HeyGen）'};
+const S = {data:null, level:'ads', pack:'all', st:'all', kind:'all', sort:'pack', part:{}, err:null};
+const STL = {made:'作成済み', todo:'未作成'};
+const yen = n => '¥' + (+n).toLocaleString('ja-JP');
+
+function adsShown(){
+  const D = S.data; const a = D.ads.filter(x => (S.pack === 'all' || x.pack === S.pack) && (S.st === 'all' || x.status === S.st) && (S.kind === 'all' || x.kind === S.kind));
+  const po = Object.fromEntries(D.packs.map((p, i) => [p.id, i])), ko = {'VSL（既存）':0,'全尺VSL':1,'ミニVSL':2,'ショート':3,'静止画':4};
+  const by = {pack: x => [po[x.pack], x.status === 'made' ? 0 : 1, ko[x.kind] ?? 9],
+              status: x => [x.status === 'made' ? 0 : 1, po[x.pack], ko[x.kind] ?? 9],
+              kind: x => [ko[x.kind] ?? 9, po[x.pack], x.status === 'made' ? 0 : 1]}[S.sort];
+  return a.slice().sort((p, q) => { const A = by(p), B = by(q); for (let i = 0; i < A.length; i++) if (A[i] !== B[i]) return A[i] - B[i]; return p.key.localeCompare(q.key); });
+}
+function thumb(x){ return x.thumb ? `<img class="th" src="${esc(x.thumb)}" alt="" loading="lazy">` : '<div class="thph">未作成</div>'; }
+function assetCell(a){ const k = a.kind;
+  const img = a.img ? `<img src="${esc(a.img)}" alt="" loading="lazy">` : `<div class="ph k-${k}">${esc(KIND[k])}</div>`;
+  const rs = k === 'ai' ? `AIで生成します。なぜなら、${esc(a.reason)}` : esc(a.reason || '');
+  return `<div class="asset ${k}">${img}<div class="tx"><span class="kc k-${k}">${esc(KIND[k])}</span><span class="lbl">${esc(a.label)}</span>${rs ? `<span class="rs">${rs}</span>` : ''}</div></div>`; }
+function packOf(id){ return S.data.packs.find(p => p.id === id) || {}; }
+
+function tableCampaign(){
+  const D = S.data, c = D.campaign, m = D.ads.filter(a => a.status === 'made').length;
+  return `<div class="tbl"><table><thead><tr><th>オン/オフ</th><th>キャンペーン</th><th>配信</th><th class="num">1日の予算</th><th>広告セット</th><th>広告（作成済み／全部）</th></tr></thead><tbody>
+    <tr data-level="sets" tabindex="0"><td><span class="toggle" title="停止中"></span></td><td class="nm"><a href="#" data-level="sets">${esc(c.name)}</a><span class="s">ID ${esc(c.id)}</span></td><td>停止中</td><td class="num">${yen(c.budget)}</td><td class="num">${D.packs.length}</td>
+    <td><div class="prog"><div class="b"><i style="width:${100 * m / D.ads.length}%"></i></div><span>${m}／${D.ads.length}</span></div></td></tr></tbody></table></div>
+    <div class="hint">行を押すと広告セット（パック）の一覧に切り替わります。</div>`;
+}
+function tableSets(){
+  const D = S.data;
+  return `<div class="tbl"><table><thead><tr><th>オン/オフ</th><th>広告セット</th><th>狙う層</th><th class="num">最低予算/日</th><th>広告（作成済み／全部）</th></tr></thead><tbody>
+    ${D.packs.map(p => { const a = D.ads.filter(x => x.pack === p.id), m = a.filter(x => x.status === 'made').length;
+      return `<tr data-set="${esc(p.id)}" tabindex="0"><td><span class="toggle" title="停止中"></span></td><td class="nm"><a href="#" data-set="${esc(p.id)}">${esc(p.set_name)}</a><span class="s"><span class="pk">${esc(p.id)}</span> ${esc(p.name)}</span></td>
+        <td class="layer">${esc(p.layer)}</td><td class="num">${p.min_budget ? yen(p.min_budget) : '—'}</td>
+        <td><div class="prog"><div class="b"><i style="width:${a.length ? 100 * m / a.length : 0}%"></i></div><span>${m}／${a.length}${m ? '' : '　配信できる広告なし'}</span></div></td></tr>`; }).join('')}
+    </tbody></table></div><div class="hint">行を押すと、そのパックの広告だけを表示します。</div>`;
+}
+function tableAds(){
+  const a = adsShown();
+  if (!a.length) return '<div class="empty">この条件の広告はありません。</div>';
+  return `<div class="tbl"><table><thead><tr><th></th><th>広告</th><th>広告セット</th><th>種類</th><th>遷移先</th><th>状態</th></tr></thead><tbody>
+    ${a.map(x => `<tr data-go="${esc(x.key)}" tabindex="0"><td>${thumb(x)}</td><td class="nm"><a href="#ad-${esc(x.key)}" data-go="${esc(x.key)}">${esc(x.name)}</a><span class="s">${esc(x.length || x.note || '')}</span></td>
+      <td><span class="pk">${esc(x.pack)}</span> <span style="font-size:12px;color:var(--sub)">${esc(packOf(x.pack).name)}</span></td><td>${esc(x.kind)}</td><td style="font-size:12.5px">${esc(x.lp)}</td>
+      <td><span class="stt ${x.status}">${STL[x.status]}</span>${x.registered ? '<span class="reg">Meta に登録済み（停止中）</span>' : ''}</td></tr>`).join('')}
+    </tbody></table></div><div class="hint">広告名を押すと、下のその広告の詳細（原稿と素材）に飛びます。</div>`;
+}
+function detail(x){
+  const vids = x.video || [], pi = S.part[x.key] || 0, rowsA = x.rows || [], hasMade = rowsA.some(r => r.made);
+  const pv = vids.length ? `<video id="vid-${esc(x.key)}" controls playsinline preload="metadata" src="${esc(vids[pi][1])}"></video><div class="parts">${vids.map((p, k) => `<button data-part="${k}" data-key="${esc(x.key)}" aria-pressed="${k === pi}">${esc(p[0])}</button>`).join('')}</div>`
+    : x.thumb && x.status === 'made' ? `<img src="${esc(x.thumb)}" alt="">` : `<div class="none">未作成<br>（下の原稿と素材で作ります）</div>`;
+  const c = {}; rowsA.forEach(r => c[r.asset.kind] = (c[r.asset.kind] || 0) + 1);
+  const rows = rowsA.map(r => `<tr><td class="t">${esc(r.t)}</td><td class="sec">${esc(r.sec)}</td><td class="line">${esc(r.line)}</td><td class="vis">${esc(r.vis)}</td>${hasMade ? `<td class="made">${r.made ? `<img src="${esc(r.made)}" alt="" loading="lazy">` : ''}</td>` : ''}<td class="as">${assetCell(r.asset)}</td></tr>`).join('');
+  const P = packOf(x.pack);
+  return `<article class="adc" id="ad-${esc(x.key)}">
+    <div class="adtop"><div class="pv">${pv}</div>
+      <dl class="fields">
+        <dt>広告名</dt><dd class="big">${esc(x.name)}</dd>
+        <dt>状態</dt><dd><span class="stt ${x.status}">${STL[x.status]}</span>${x.registered ? '　Meta に登録済み（停止中）' : ''}</dd>
+        <dt>広告セット</dt><dd><span class="pk">${esc(x.pack)}</span> ${esc(P.set_name)}</dd>
+        <dt>狙う層</dt><dd>${esc(P.layer)}</dd>
+        <dt>種類</dt><dd>${esc(x.kind)}${x.length ? '・' + esc(x.length) : ''}</dd>
+        ${x.who && x.who !== '—' ? `<dt>話し手</dt><dd>${esc(x.who)}</dd>` : ''}
+        <dt>遷移先</dt><dd>${esc(x.lp)}</dd>
+        ${x.head ? `<dt>画像の文字</dt><dd class="primary">${esc(x.head)}</dd>` : ''}
+        <dt>メインテキスト</dt><dd>${x.body ? `<div class="primary">${esc(x.body)}</div>` : '<span style="color:var(--sub)">Meta に登録済みの文面を使う</span>'}</dd>
+        ${x.note ? `<dt>メモ</dt><dd style="color:var(--sub)">${esc(x.note)}</dd>` : ''}
+      </dl></div>
+    ${rows ? `<details class="gen"><summary>原稿と使う素材（${rowsA.length}行）${Object.entries(c).map(([k, n]) => `<span class="kc k-${k}">${KIND[k]} ${n}</span>`).join('')}</summary>
+      <div class="tbl"><table class="script"><thead><tr><th>秒</th><th>段</th><th>ナレーション／字幕</th><th>画</th>${hasMade ? '<th>完成画</th>' : ''}<th>使う素材</th></tr></thead><tbody>${rows}</tbody></table></div></details>`
+      : '<div class="hint" style="border-top:1px solid var(--line)">配信実績のある既存の広告です（原稿はこの一覧には入れていません）。</div>'}
+  </article>`;
+}
+function render(){ try { draw(); } catch (e) { $('#app').innerHTML = `<div class="empty">表示でエラーが出ました：${esc(e?.message || e)}（Claude に伝えてください）</div>`; } }
+function draw(){
+  const D = S.data, app = $('#app');
+  if (!D) { app.innerHTML = `<div class="empty">${esc(S.err || '広告の一覧を読み込んでいます…')}</div>`; return; }
+  const made = D.ads.filter(a => a.status === 'made').length;
+  $('#sum').innerHTML = `<span class="pill">全部<b>${D.ads.length}</b></span><span class="pill made">作成済み<b>${made}</b></span><span class="pill todo">未作成<b>${D.ads.length - made}</b></span>`;
+  const kinds = [...new Set(D.ads.map(a => a.kind))];
+  const shown = adsShown();
+  const groups = D.packs.map(p => [p, shown.filter(x => x.pack === p.id)]).filter(g => g[1].length);
+  app.innerHTML = `
+    <div class="camp"><span class="lv">キャンペーン</span><h2>${esc(D.campaign.name)}</h2><span class="kv">配信 <b>停止中</b></span><span class="kv">1日の予算 <b>${yen(D.campaign.budget)}</b></span><span class="kv">広告セット <b>${D.packs.length}</b></span></div>
+    <div class="mgr">
+      <div class="tabs" role="tablist">${[['campaign','キャンペーン',1],['sets','広告セット',D.packs.length],['ads','広告',shown.length]].map(([k, l, n]) => `<button role="tab" data-level="${k}" aria-selected="${S.level === k}">${l}<span class="c">${n}</span></button>`).join('')}</div>
+      <div class="tools">
+        <div class="chips" aria-label="パック">${[['all','すべてのパック']].concat(D.packs.map(p => [p.id, p.id + ' ' + p.name])).map(([k, l]) => `<button data-pack="${k}" aria-pressed="${S.pack === k}">${esc(l)}</button>`).join('')}</div>
+        <div class="chips" aria-label="状態">${[['all','すべて'],['made','作成済み'],['todo','未作成']].map(([k, l]) => `<button data-st="${k}" aria-pressed="${S.st === k}">${l}</button>`).join('')}</div>
+        <label for="kind">種類<select id="kind"><option value="all">すべて</option>${kinds.map(k => `<option ${S.kind === k ? 'selected' : ''}>${esc(k)}</option>`).join('')}</select></label>
+        <label for="sort">並び順<select id="sort"><option value="pack" ${S.sort === 'pack' ? 'selected' : ''}>パック順</option><option value="status" ${S.sort === 'status' ? 'selected' : ''}>作成済みが先</option><option value="kind" ${S.sort === 'kind' ? 'selected' : ''}>種類順</option></select></label>
+      </div>
+      ${S.level === 'campaign' ? tableCampaign() : S.level === 'sets' ? tableSets() : tableAds()}
+    </div>
+    <section class="details"><div class="sh"><h2>広告の詳細</h2><span>上の絞り込みと同じ広告を、パックごとに並べています</span></div>
+      ${groups.map(([p, xs]) => `<div class="group"><h3><span class="pk">${esc(p.id)}</span>${esc(p.set_name)}<span class="l">${esc(p.layer)}｜作成済み ${xs.filter(x => x.status === 'made').length}／${xs.length}</span></h3>${xs.map(detail).join('')}</div>`).join('') || '<div class="empty">この条件の広告はありません。</div>'}
+    </section>`;
+}
+function go(key){ if (!document.getElementById('ad-' + key)) { S.pack = 'all'; S.st = 'all'; S.kind = 'all'; render(); } go2(key); }
+function go2(key){ const el = document.getElementById('ad-' + key); if (!el) return; const d = el.querySelector('details'); if (d) d.open = true;
+  el.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'});
+  el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); }
+document.addEventListener('click', e => {
+  const t = e.target;
+  const g = t.closest('[data-go]'); if (g) { e.preventDefault(); go(g.dataset.go); return; }
+  const lv = t.closest('[data-level]'); if (lv) { e.preventDefault(); S.level = lv.dataset.level; render(); return; }
+  const st = t.closest('[data-set]'); if (st) { e.preventDefault(); S.pack = st.dataset.set; S.level = 'ads'; render(); return; }
+  const pk = t.closest('[data-pack]'); if (pk) { S.pack = pk.dataset.pack; render(); return; }
+  const s2 = t.closest('[data-st]'); if (s2) { S.st = s2.dataset.st; render(); return; }
+  const p = t.closest('[data-part]'); if (p) { S.part[p.dataset.key] = +p.dataset.part; render(); go2(p.dataset.key); document.getElementById('vid-' + p.dataset.key)?.play?.().catch(() => {}); }
+});
+document.addEventListener('keydown', e => { if (e.key !== 'Enter') return; const r = e.target.closest?.('tr[data-go],tr[data-set],tr[data-level]'); if (r) r.click(); });
+document.addEventListener('change', e => { if (e.target.id === 'kind') { S.kind = e.target.value; render(); } if (e.target.id === 'sort') { S.sort = e.target.value; render(); } });
+(async () => {
+  try { S.data = await fetch('data/launch.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  catch (e) { S.err = '一覧のデータを読み込めませんでした（' + (e?.message || e) + '）'; }
+  render();
+  if (location.hash.startsWith('#ad-')) go(location.hash.slice(4));
+})();
+</script>

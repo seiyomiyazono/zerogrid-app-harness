@@ -1,0 +1,25 @@
+Create a polished Japanese direct-response Instagram ad image, 4:5 portrait, in the same design style as the FIRST reference image (layout, typography mood, decorative serif/mincho headline with large emphasized words and gradient color, soft bokeh background, person photo on one side, product photo on the other, small circular badge icons, a ribbon tag, and a bold full-width call-to-action band at the bottom). Do NOT copy the reference's product or text.
+
+Use these inputs:
+- SECOND image: the woman (a Japanese animal shelter director). Keep her face and clothing exactly; place her on the right side, cut out, chest-up, smiling.
+- THIRD image: the product — a grey dog toilet pad with white bone pattern. Show the pad (with the dog sitting on it) at the lower left, as a clean product photo.
+- FOURTH image: the brand logo 「ワンドライ」. Place it small at the top-left exactly as given.
+
+Color palette: deep navy (#1e3a6e) and warm cream background with soft light-blue bokeh, accent coral-red for emphasis. Clean, premium, trustworthy.
+
+Japanese text (render EXACTLY these characters, no other text):
+1. Headline (large, decorative bold mincho, 3 lines, left side):
+   「毎朝の床拭き、」 (navy, medium)
+   「終わらない理由」 (very large, navy-to-blue gradient, 終わらない emphasized in coral-red)
+   「あなたのせいじゃない。」 (navy, medium)
+2. Sub copy (small, under headline): 「犬は目ではなく、鼻でトイレを探します」
+3. Three round white badges with thin border, in a row (each 2–3 short lines, emphasized word in coral):
+   badge1: 「シーツの横で / する」
+   badge2: 「叱っても / 覚えない」
+   badge3: 「においで / 伝える」
+4. Ribbon tag next to the woman (navy band, white text): 「元 保護センター施設長が解説」
+5. Small caption under the woman: 「岸本 早苗」
+6. Bottom full-width coral-red band with white bold text: 「理由を記事でチェック！ ▶」
+7. Tiny text at the bottom-right corner: 「※イメージ」
+
+No English text, no prices, no medical claims, no misspelled or extra Japanese characters.

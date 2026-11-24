@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<style>body{margin:0;font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;background:__SOFT__;color:__INK__}.w{max-width:420px;margin:0 auto;padding:36px 20px;text-align:center}h1{font-size:20px;margin:18px 0 8px}p{font-size:14px;line-height:1.8;margin:0 0 18px;color:#3b4b5e}.b{display:block;width:100%;box-sizing:border-box;padding:15px;border-radius:12px;background:#06C755;color:#fff;font-weight:900;font-size:16px;border:0;text-decoration:none}.b.g{background:#fff;color:__INK__;border:1.5px solid #cfd8e2;margin-top:10px}.s{font-size:12px;color:#7a8794}</style></head>
+<body><div class="w"><div id="m"><h1>準備しています…</h1><p>そのままお待ちください。</p></div></div>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script>
+(async function(){
+  var LIFF_ID = '__LIFF_ID__'; var OA = '__OA_URL__';
+  var m = document.getElementById('m');
+  function show(h){ m.innerHTML = h; }
+  // サイトから渡された広告クリックID等を、この端末（LINE内ブラウザ）に保存する。購入時に /liff/go が読み出して復元する
+  function save(){
+    try {
+      var q = new URLSearchParams(location.search); var st = q.get('liff.state'); if (st) { try { q = new URLSearchParams(st.replace(/^[^?]*\?/, '')); } catch(e){} }
+      var cur = JSON.parse(localStorage.getItem('__CLICK_KEY__') || '{}');
+      var next = { fbclid: q.get('fbclid') || cur.fbclid || '', fbp: q.get('fbp') || cur.fbp || '', ad_content: q.get('ad_content') || cur.ad_content || '', ad_term: q.get('ad_term') || cur.ad_term || '', ad_campaign: q.get('ad_campaign') || cur.ad_campaign || '', at: q.get('fbclid') ? Date.now() : (cur.at || Date.now()) };
+      localStorage.setItem('__CLICK_KEY__', JSON.stringify(next)); return next;
+    } catch(e){ return {}; }
+  }
+  save();
+  try { await liff.init({ liffId: LIFF_ID }); } catch(e) { show('<h1>LINEで開いてください</h1><p>友だち追加はこちらから。</p><a class="b" href="' + OA + '">友だち追加</a>'); return; }
+  save();
+  if (!liff.isLoggedIn()) { liff.login(); return; }
+  var friend = false; try { friend = (await liff.getFriendship()).friendFlag; } catch(e){}
+  if (friend) {
+    show('<h1>友だち追加ありがとうございます</h1><p>トーク画面に届いた「診断する」を押すと、30秒の無料診断がはじまります。</p><button class="b" id="c">トークに戻る</button>');
+    document.getElementById('c').onclick = function(){ if (liff.isInClient()) liff.closeWindow(); else location.href = OA; };
+  } else {
+    show('<h1>LINEで無料診断</h1><p>友だち追加すると、トーク画面で30秒の診断がはじまります。__LIFF_GIFT__</p><a class="b" id="a" href="' + OA + '">友だち追加して診断する</a><p class="s" style="margin-top:14px">追加は無料・いつでも解除できます</p>');
+    document.getElementById('a').onclick = function(ev){ ev.preventDefault(); liff.openWindow({ url: OA, external: false }); };
+  }
+})();
+</script></body></html>

@@ -1,0 +1,560 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LINE 診断の商品ごとの設定（products/<id>/survey.json）",
+  "description": "Bot の本体（lib/engine.js）はどの商品でも同じ。商品ごとに変わる物はこの1ファイルだけ。{name} はお客さんの LINE の名前、{p} などは問いの答えに置きかわる。LINE の上限と道のたどりは scripts/check.mjs が数える。 mode が \"fit_check\" の時は「買う前の相性チェック」（悩みを聞かない。result・tools・compare は要らず、fit が要る）。",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "brand",
+    "site",
+    "line",
+    "public_url",
+    "copy",
+    "questions",
+    "worries",
+    "coupon",
+    "offer",
+    "variants",
+    "utm",
+    "popup"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]{2,30}$",
+      "description": "英小文字の商品 id。Vercel のプロジェクト名・鍵のファイル名（line-<id>.env）にも使う"
+    },
+    "name": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "diagnosis",
+        "fit_check"
+      ],
+      "description": "無し・diagnosis＝悩みの診断（元の店）。fit_check＝買う前の最後の不安・相性チェック（2026-10-20）"
+    },
+    "_sources": {
+      "type": "object",
+      "description": "fit_check：問い・選択肢・不安・答えごとの出典（ファイル名と行）。キーは q.<key>.<値>・worry.<key> など。check.mjs が抜けを数える"
+    },
+    "_notes": {
+      "type": "object",
+      "description": "作った手順・出どころ・仮の値の一覧（example_values）。仮の値が残っていると check --deploy が止める"
+    },
+    "brand": {
+      "type": "object",
+      "required": [
+        "name",
+        "wordmark",
+        "theme"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "logo": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "画像に貼るロゴ（透過 PNG）。null なら wordmark を文字で置く"
+        },
+        "logo_right": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "wordmark": {
+          "type": "string"
+        },
+        "theme": {
+          "type": "object",
+          "required": [
+            "primary",
+            "band",
+            "band_text",
+            "chart",
+            "chart_other",
+            "ink",
+            "mute",
+            "soft",
+            "bar",
+            "corner",
+            "frame",
+            "font_heading",
+            "font_body",
+            "font_latin"
+          ],
+          "properties": {
+            "primary": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Flex のボタン・見出し・リッチメニュー右の字"
+            },
+            "band": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "画像の色の帯（元の店は水色 #D0E8F7）"
+            },
+            "band_text": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "chart": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "chart_other": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "ink": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "mute": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "soft": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "bar": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "corner": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "frame": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "primary_name": {
+              "type": "string"
+            },
+            "banner_bg_name": {
+              "type": "string"
+            },
+            "ticket_name": {
+              "type": "string"
+            },
+            "photo_mood": {
+              "type": "string"
+            },
+            "font_heading": {
+              "type": "string"
+            },
+            "font_body": {
+              "type": "string"
+            },
+            "font_latin": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "site": {
+      "type": "object",
+      "required": [
+        "url",
+        "product_path"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "product_path": {
+          "type": "string",
+          "pattern": "^/"
+        }
+      }
+    },
+    "line": {
+      "type": "object",
+      "required": [
+        "oa_basic_id"
+      ],
+      "properties": {
+        "oa_basic_id": {
+          "type": "string",
+          "pattern": "^@"
+        },
+        "liff_id": {
+          "type": "string"
+        }
+      }
+    },
+    "public_url": {
+      "type": "string",
+      "pattern": "^https://"
+    },
+    "image_version": {
+      "type": "string"
+    },
+    "copy": {
+      "type": "object",
+      "required": [
+        "welcome",
+        "card_alt",
+        "card_note",
+        "start_label",
+        "keywords",
+        "fail_text"
+      ],
+      "properties": {
+        "welcome": {
+          "type": "string"
+        },
+        "card_alt": {
+          "type": "string"
+        },
+        "card_note": {
+          "type": "string"
+        },
+        "start_label": {
+          "type": "string"
+        },
+        "keywords": {
+          "type": "string",
+          "description": "送られた言葉がこの正規表現に当たれば1問目から"
+        },
+        "loading_seconds": {
+          "type": "number"
+        },
+        "loading_wait_ms": {
+          "type": "number"
+        },
+        "fail_text": {
+          "type": "string"
+        }
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "head",
+          "opts"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z]$",
+            "description": "1文字。postback に入る。s w ws g sub は使えない"
+          },
+          "head": {
+            "type": "string"
+          },
+          "opts": {
+            "type": "array",
+            "description": "[値, ボタンの字] の並び。fit_check は [値, ボタンの字, {fit: ok|warn|no, reason: 結果のカードの理由の1行}]（no＝A の「使えない人」に当たる時だけ）"
+          },
+          "in_reasons": {
+            "type": "boolean",
+            "description": "fit_check：false なら結果の理由に使わない（場所など）"
+          }
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "required": [
+        "image"
+      ],
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "例 r_{p}_{a}.jpg（悩み×条件の組み合わせ）"
+        }
+      }
+    },
+    "worries": {
+      "type": "object",
+      "required": [
+        "alt",
+        "head_first",
+        "head_more",
+        "next_first",
+        "next_more",
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array"
+        },
+        "image": {
+          "type": "string",
+          "description": "診断：不安の答えの画像（例 w_{w}.jpg）。fit_check は answers[k].image を使う"
+        },
+        "answers": {
+          "type": "object",
+          "description": "fit_check：不安の値ごとの答えのカード {title, body:[1〜3行], note?, image?}。A・E の事実だけで書く"
+        }
+      }
+    },
+    "tools": {
+      "type": "object",
+      "required": [
+        "intro",
+        "alt",
+        "button",
+        "image",
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array"
+        }
+      }
+    },
+    "compare": {
+      "type": "object",
+      "required": [
+        "alt",
+        "note",
+        "button",
+        "image",
+        "costs"
+      ],
+      "properties": {
+        "costs": {
+          "type": "object",
+          "description": "tools の値ごとに {mode: chart|single|note, label, per_year|total|note, basis}"
+        }
+      }
+    },
+    "coupon": {
+      "type": "object",
+      "required": [
+        "amount",
+        "hours",
+        "prefix",
+        "title_prefix",
+        "combines",
+        "alt",
+        "note",
+        "button",
+        "image",
+        "applied_text"
+      ],
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "hours": {
+          "type": "number"
+        },
+        "prefix": {
+          "type": "string",
+          "pattern": "^[A-Z0-9-]{3,20}$"
+        },
+        "title_prefix": {
+          "type": "string"
+        },
+        "combines": {
+          "type": "object",
+          "required": [
+            "orderDiscounts",
+            "productDiscounts",
+            "shippingDiscounts"
+          ],
+          "properties": {}
+        }
+      }
+    },
+    "offer": {
+      "type": "object",
+      "required": [
+        "alt",
+        "kicker",
+        "title",
+        "subtitle",
+        "item_field",
+        "items",
+        "image",
+        "variant_key",
+        "price_key",
+        "prices",
+        "buy_label"
+      ],
+      "properties": {
+        "ask": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "クーポンの後に聞く事（元の店は定期便）。null なら聞かずにおすすめへ"
+        },
+        "subscription": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "定期便の足し物 {addon_variant, selling_plan, addon_price, off_rate, on_text, off_text}。null なら無し"
+        },
+        "items": {
+          "type": "array",
+          "description": "カルーセルに並べる [値, 字]。値は item_field に入る"
+        },
+        "variant_key": {
+          "type": "string",
+          "description": "variants を引く鍵の型（例 {c}|{z}|{n}）"
+        },
+        "prices": {
+          "type": "object",
+          "description": "price_key ごとの [売値, 比べる値（0 なら出さない）]"
+        },
+        "size_alias": {
+          "type": "object",
+          "description": "サイズの答え → バリアントのサイズ（例 {\"big\":\"orig\"}）"
+        }
+      }
+    },
+    "variants": {
+      "type": "object",
+      "description": "variant_key → Shopify のバリアント ID（scripts/pull-variants.mjs で店から取る）"
+    },
+    "utm": {
+      "type": "object",
+      "required": [
+        "campaign"
+      ],
+      "properties": {
+        "campaign": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        }
+      }
+    },
+    "popup": {
+      "type": "object",
+      "required": [
+        "delay_ms",
+        "exclude_paths",
+        "banner",
+        "banner_w",
+        "banner_h",
+        "alt",
+        "fab_label",
+        "storage_key"
+      ],
+      "properties": {
+        "exclude_paths": {
+          "type": "array",
+          "description": "出さないページ（記事 LP は A/B テストを汚すので出さない）"
+        }
+      }
+    },
+    "richmenu": {
+      "type": "object",
+      "required": [
+        "size",
+        "chatBarText",
+        "areas"
+      ],
+      "properties": {
+        "areas": {
+          "type": "array"
+        }
+      }
+    },
+    "images": {
+      "type": "object",
+      "description": "photos（生成する写真の場面）・banner（ポップアップの文言）・cards（文字入れの中身）・source_dir（できた画像の置き場）"
+    },
+    "fit": {
+      "type": "object",
+      "required": [
+        "alt_ok",
+        "alt_no",
+        "head_ok",
+        "head_no",
+        "reasons_title",
+        "continue_no",
+        "stop_label",
+        "stop_text"
+      ],
+      "description": "fit_check の結果のカード。理由は選んだ選択肢の reason から3つ（足りなければ fixed_reasons）",
+      "properties": {
+        "alt_ok": {
+          "type": "string"
+        },
+        "alt_no": {
+          "type": "string"
+        },
+        "head_ok": {
+          "type": "string"
+        },
+        "head_warn": {
+          "type": "string"
+        },
+        "head_no": {
+          "type": "string"
+        },
+        "reasons_title": {
+          "type": "string"
+        },
+        "fixed_reasons": {
+          "type": "array"
+        },
+        "note_no": {
+          "type": "string"
+        },
+        "ok_image": {
+          "type": "string"
+        },
+        "no_image": {
+          "type": "string"
+        },
+        "continue_no": {
+          "type": "string",
+          "description": "合わないかもしれない人が、それでも不安の答えを見る時のボタン"
+        },
+        "stop_label": {
+          "type": "string"
+        },
+        "stop_text": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "fit_check"
+          }
+        },
+        "required": [
+          "mode"
+        ]
+      },
+      "then": {
+        "required": [
+          "fit"
+        ]
+      },
+      "else": {
+        "required": [
+          "result",
+          "worries",
+          "tools",
+          "compare"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "$schema": "../../schema/survey.schema.json",
+  "id": "tachimat",
+  "name": "立ち仕事マット（起伏のある、平らでないマット）",
+  "_notes": {
+    "made_by": "tools/line-survey/scripts/survey-from-harness.md の手順（2026-10-20・仮ハーネス）",
+    "sources": "newec_harness/立ち仕事マット/01_商品理解の基盤/ の B（④原文・⑤壁）・H（拘束姿勢）・K（_一覧）・D1/D2（お金と手間）・A（5章・7章）",
+    "example_values": [
+      "brand.* — ブランド名・色は未定（運営者 が決める）。色は仮",
+      "line.* / public_url / site.url — まだ LINE も店も無い",
+      "variants.* — 店に商品が無いので仮の番号（9000000000001〜）。店ができたら scripts/pull-variants.mjs で取り直す",
+      "offer.prices — 00_入口 の案（1枚 12,800〜14,800円）から置いた例。運営者 が決める",
+      "compare.costs — D1・D2 の価格と交換目安からの推論（例）。店のデータではない",
+      "worries の答え（images.cards.worries）— 同型（Topo・AUCUDA）の事実から。仕入れ品の仕様が来たら確かめて直す"
+    ]
+  },
+  "brand": {
+    "name": "（ブランド名 未定）",
+    "logo": null,
+    "wordmark": "STANDING MAT",
+    "theme": {
+      "primary": "#2D5A47", "primary_name": "深い緑",
+      "band": "#DCEBE3", "band_text": "#2D5A47",
+      "chart": "#5E9C80", "chart_other": "#BAC0C6",
+      "ink": "#1C1C1C", "mute": "#6B7280", "soft": "#F2F6F3",
+      "bar": "#141414", "corner": "#E3A04F", "frame": "#B8A07A",
+      "banner_bg_name": "淡いセージグリーン", "ticket_name": "あたたかいオレンジ色",
+      "photo_mood": "白・ナチュラルな木・淡いセージグリーン基調",
+      "font_heading": "/System/Library/Fonts/ヒラギノ明朝 ProN.ttc", "font_heading_index": 1,
+      "font_body": "/System/Library/Fonts/ヒラギノ明朝 ProN.ttc", "font_body_index": 0,
+      "font_latin": "/System/Library/Fonts/Supplemental/Didot.ttc"
+    }
+  },
+  "site": { "url": "https://example-tachimat.myshopify.com", "product_path": "/products/tachimat" },
+  "line": { "oa_basic_id": "@example", "liff_id": "" },
+  "public_url": "https://tachimat-line.vercel.app",
+  "image_version": "?v=1",
+  "copy": {
+    "welcome": "{name}、友だち追加ありがとうございます",
+    "card_alt": "立ち仕事のつらさ、原因チェック（30秒）",
+    "card_note": "4つの質問に答えるだけ。回答のお礼に1,000円OFFクーポン。",
+    "start_label": "診断する",
+    "keywords": "チェック|クーポン|診断",
+    "loading_seconds": 5,
+    "loading_wait_ms": 3000,
+    "fail_text": "クーポンの発行に失敗しました。お手数ですが「クーポン」と送ってください。担当が確認します。"
+  },
+  "questions": [
+    { "key": "p", "head": "{name}が、いま立ち仕事でつらいのは？", "opts": [
+      ["koshi", "2時間もすると腰が重く痛む"],
+      ["ura", "夕方、足の裏がジンジンする"],
+      ["mukumi", "ふくらはぎがパンパン・靴がきつくなる"],
+      ["hiza", "膝が痛くなる"] ] },
+    { "key": "t", "head": "その中で、いちばんつらいのは？", "opts": [
+      ["end", "仕事の終わりごろ、立っているのがやっと"],
+      ["home", "帰ってからも、家事で立つのがつらい"],
+      ["monday", "休んでも、週明けにまた戻る"],
+      ["med", "湿布や痛み止めがないと立てない"] ] },
+    { "key": "a", "head": "いちばん長く立つ場所は？", "opts": [
+      ["reji", "レジ・品出し"],
+      ["kitchen", "台所（料理・洗い物）"],
+      ["desk", "在宅のスタンディングデスク"],
+      ["factory", "工場・検品・倉庫"],
+      ["other", "その他（美容・看護・接客など）"] ] },
+    { "key": "z", "head": "身長は？（マットの大きさを選びます）", "opts": [
+      ["mini", "163cm以下"],
+      ["orig", "164cm以上"] ] }
+  ],
+  "result": { "image": "r_{p}_{a}.jpg" },
+  "worries": {
+    "alt": "不安なこと",
+    "head_first": "ほかに、不安なことはありますか？",
+    "head_more": "まだ気になることはありますか？",
+    "next_first": "特にない、次へ",
+    "next_more": "もう大丈夫、次へ",
+    "image": "w_{w}.jpg",
+    "items": [
+      ["work", "職場に置いても大丈夫？"],
+      ["wobble", "ふらつかない？つまずかない？"],
+      ["flat", "平らなマットと何が違う？"],
+      ["wear", "すぐへたらない？"],
+      ["smell", "においは？"]
+    ]
+  },
+  "tools": {
+    "intro": "最後に、今いちばん使っている対策は？",
+    "alt": "今使っているもの",
+    "button": "これを使っている",
+    "image": "t_{g}.jpg",
+    "items": [
+      ["flatmat", "平らな疲労軽減マット"],
+      ["insole", "中敷き・クッションの靴"],
+      ["socks", "着圧ソックス"],
+      ["shippu", "湿布・コルセット"],
+      ["seitai", "整体・マッサージ"],
+      ["none", "まだ何もしていない"]
+    ]
+  },
+  "compare": {
+    "alt": "比べると",
+    "note": "回答のお礼に、クーポンをプレゼント",
+    "button": "クーポンを獲得",
+    "image": "c_{g}.jpg",
+    "costs": {
+      "flatmat": { "mode": "note", "label": "平らなマット", "price_each": 5200, "note": "値段だけなら平らなマットの方が安い。違うのは、足が止まるかどうか" },
+      "insole": { "mode": "note", "label": "中敷き", "price_each": 1300, "note": "中敷きは靴の中のクッション。足の置き場は変わりません" },
+      "socks": { "mode": "chart", "label": "着圧ソックス", "per_year": 12000, "basis": "年に2〜3回・2〜3足を回す（D1 3-C の推論）" },
+      "shippu": { "mode": "chart", "label": "湿布", "per_year": 78000, "basis": "大判を毎日左右に貼った場合 月約6,500円（D2 6-3 の推論）" },
+      "seitai": { "mode": "single", "label": "整体（半年・週1）", "total": 132000, "basis": "指圧60分 5,500円×週1×半年（D2 8-3 の推論）" },
+      "none": { "mode": "note", "label": "これから始めるなら", "note": "立つ時間は変えられなくても、足が止まる時間は減らせます" }
+    }
+  },
+  "coupon": {
+    "amount": 1000, "hours": 24, "prefix": "LINE1000OFF-", "title_prefix": "LINE原因チェック｜",
+    "combines": { "orderDiscounts": false, "productDiscounts": true, "shippingDiscounts": true },
+    "alt": "本日限り 1,000円OFFクーポン", "note": "回答ありがとうございました", "button": "クーポンを使う", "image": "coupon.jpg",
+    "applied_text": "1,000円OFFクーポン（{code}）を自動で適用しました。\n本日限り・{hours}時間有効です。"
+  },
+  "offer": {
+    "ask": null,
+    "subscription": null,
+    "alt": "{name}におすすめ",
+    "kicker": "{name}におすすめ",
+    "title": "{brand} {item}",
+    "subtitle": "{size}｜送料無料",
+    "item_field": "n",
+    "items": [["1", "1枚"], ["2", "2枚セット（職場＋家）"]],
+    "fixed": {},
+    "image": "p_{z}_{n}.jpg",
+    "size_key": "z",
+    "size_labels": { "mini": "Mini（約64×49cm）", "orig": "Original（約74×67cm）" },
+    "variant_key": "{z}|{n}",
+    "price_key": "{z}|{n}",
+    "prices": { "mini|1": [12800, 0], "mini|2": [22800, 25600], "orig|1": [14800, 0], "orig|2": [26800, 29600] },
+    "buy_label": "購入する",
+    "utm_content": "n{n}"
+  },
+  "variants": { "mini|1": 9000000000001, "mini|2": 9000000000002, "orig|1": 9000000000003, "orig|2": 9000000000004 },
+  "utm": { "campaign": "tachimat_line_survey" },
+  "popup": {
+    "delay_ms": 5000,
+    "exclude_paths": ["/pages/advertorial"],
+    "banner": "line-popup.webp", "banner_w": 1086, "banner_h": 1448,
+    "alt": "LINE追加で無料診断。立ち仕事のつらさの原因が30秒でわかります。診断後にさらに1,000円OFFクーポンプレゼント。ここから追加",
+    "fab_label": "無料診断",
+    "storage_key": "tachimat_line_popup_v1"
+  },
+  "richmenu": {
+    "size": [2500, 843],
+    "chatBarText": "原因チェック",
+    "areas": [
+      { "bounds": [0, 0, 1660, 843], "action": { "type": "postback", "data": "s=0", "displayText": "診断する" } },
+      { "bounds": [1660, 0, 840, 843], "action": { "type": "uri", "uri": "{site}{product_path}?utm_source=line&utm_medium=richmenu" } }
+    ]
+  },
+  "images": {
+    "photos": {
+      "hero": "日本のスーパーのレジカウンターの内側で、50代の日本人女性店員が、足元の起伏のある濃いグレーの立ち仕事用フォームマット（前側に横長の棒状の盛り上がり、中央に低い山、左右にゆるい坂がある一体成形のマット）の上で、片足を坂にかけてリラックスして立ち、穏やかに微笑んでいる。全身が写る。明るく清潔な店内",
+      "bg_reji": "日本のスーパーのレジの中、50代の日本人女性店員の腰から下と足元。黒いスニーカーで、起伏のある濃いグレーの立ち仕事用フォームマット（前側に横長の棒状の盛り上がり、中央に低い山、左右にゆるい坂）の坂に片足をのせている。背景はぼかしたレジ台",
+      "bg_kitchen": "日本の明るい家庭のキッチンのシンク前、夕方のやわらかい光。40代の日本人女性が靴下で、起伏のある濃いグレーの立ち仕事用フォームマット（前側に横長の棒状の盛り上がり、中央に低い山、左右にゆるい坂）の上に立って洗い物をしている。腰から下と足元が写る",
+      "w_wobble": "起伏のある濃いグレーの立ち仕事用フォームマット（前側に横長の棒状の盛り上がり、中央に低い山、左右にゆるい坂）の平らな部分に、白いスニーカーの両足がしっかり立っているクローズアップ。床は明るい木目、清潔感",
+      "coupon": "日本の明るいキッチンで、50代の日本人女性がマグカップを持って微笑んでいる写真。余白の多い上品な構図"
+    },
+    "banner": {
+      "key": "popup",
+      "headline": "LINE追加で無料診断",
+      "sub": "立ち仕事のつらさの原因、30秒でわかります",
+      "illustration": "起伏のある濃いグレーの立ち仕事用マット（前に横長の棒状の盛り上がり、中央に低い山、左右にゆるい坂）の上に立つ、白いスニーカーをはいた両足",
+      "ticket": "診断後にさらに 1,000円OFFクーポン プレゼント",
+      "ticket_big": "1,000円OFF",
+      "button": "ここから追加",
+      "footnote": "友だち追加は無料・いつでも解除できます"
+    },
+    "cards": {
+      "result": {
+        "keys": ["p", "a"], "out": "r_{p}_{a}", "bg": "bg_{a}",
+        "label": "{a} × {p}", "lines": ["原因は、", "止まって立つこと"], "bottom": "立っているだけで、足が動く床",
+        "short": {
+          "p": { "koshi": ["腰", "腰の筋肉が、縮んだまま固まる"], "ura": ["足の裏", "足の置き場が、ずっと同じ"], "mukumi": ["むくみ", "ふくらはぎが止まり、血がたまる"], "hiza": ["膝", "同じ角度で、膝が固まる"] },
+          "a": { "reji": ["レジ", "レジの中でも、足が置きかわる"], "kitchen": ["台所", "シンク前でも、足が置きかわる"], "desk": ["在宅デスク", "机の前でも、足が置きかわる"], "factory": ["工場", "持ち場でも、足が置きかわる"], "other": ["立ち仕事", "同じ場所でも、足が置きかわる"] }
+        }
+      },
+      "worries": {
+        "work":   { "q": "職場に置ける？", "subs": ["約64×49cmのMiniなら", "レジの足元にも収まる大きさ"], "note": "※職場の決まりは職場にご確認ください" },
+        "wobble": { "q": "ふらつかない？", "subs": ["ふだんは平らな所に立つだけ", "坂と山は、乗りたい時だけ"] },
+        "flat":   { "q": "平らなマットと違う？", "big": "ここが違います", "subs": ["平らな面は、足を止める", "起伏が、足の置き場を変える"] },
+        "wear":   { "q": "すぐへたらない？", "subs": ["一体成形のフォーム", "保証の日数は店のページに記載"], "note": "※仕入れ品の仕様で確かめてから出す" },
+        "smell":  { "q": "においは？", "subs": ["開けたてのにおいは数日で", "中性洗剤で拭けばすっきり"], "note": "※同型の口コミから。仕入れ品で確かめてから出す" }
+      },
+      "coupon": { "label": "回答のお礼に・本日限り", "big": "1,000円OFF", "band": "COUPON PRESENT", "subs": ["24時間で消えるクーポンです", "お一人さま1回"], "bottom": "クーポンを使う" },
+      "hero": { "label": "公式LINE", "lines": ["立ち仕事の", "つらさの原因"], "subs": ["4つの質問でわかります"], "bottom": "回答のお礼に 1,000円OFF" },
+      "richmenu": { "crop": [0.6, 0.78], "lines": ["立ち仕事の", "つらさの原因"], "band": "30秒 原因チェック", "sub": "回答のお礼に 1,000円OFF", "pill": "タップして診断 ›", "right": "商品を見る ›" }
+    }
+  }
+}

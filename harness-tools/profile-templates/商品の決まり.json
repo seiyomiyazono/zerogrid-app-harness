@@ -1,0 +1,28 @@
+{
+ "_説明": "商品ごとの保証と、書類に足す節。商品フォルダに 08_ストアの決まり.json として置く。初期値は標準の型（30日・その半分の15日使ってから・それより前は受けない・全額。保証の日数は変えられ、使う日数はいつもその半分）。 値は全部空（null）で置く。初期値は ~/.agents/skills/ec-ad-ops/scripts/store-legal/questions.json にあり、運営者が「初期値でよい」と答えた物だけ AI が入れる。",
+ "product_name": null,
+ "guarantee_name": null,
+ "guarantee_days": null,
+ "use_days": null,
+ "refund_rate": null,
+ "early_refund": null,
+ "early_refund_rate": null,
+ "reason_sentence": null,
+ "defect": {
+  "claim_days": null,
+  "return_required": null
+ },
+ "exchange": {
+  "enabled": null,
+  "text": null
+ },
+ "body_use": null,
+ "subscription": {
+  "enabled": null,
+  "name": null,
+  "interval": null,
+  "billing": null,
+  "min_cycles": null,
+  "cancel_method": null
+ }
+}

@@ -1,0 +1,211 @@
+{
+  "_読む人": "カゴ落ちメール4通を作る Claude。これは埋め終わった見本（ここちドライ 女性用・2026-10-20 編集長 r3 の後の値）。新しい店はこのファイルを写して値だけ入れ替える。欄の意味は SKILL.md の「店の値の欄」",
+  "name": "ここちドライ",
+  "url": "https://kokochidry.shop",
+  "logo": "https://kokochidry.shop/cdn/shop/files/logo-kokochidry.png?v=1788544326&width=500",
+  "logoOnDark": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/logo-kokochidry-white.png?v=1792503709",
+  "color": {
+    "page": "#ffffff",
+    "soft": "#fdeaef",
+    "strong": "#f6ccd7",
+    "deep": "#bf5570",
+    "button": "#e0708a",
+    "ink": "#3d2129",
+    "mute": "#8a7176",
+    "line": "#f0cfd8",
+    "star": "#e0708a"
+  },
+  "font": {
+    "head": "'Hiragino Mincho ProN','Yu Mincho','YuMincho','Noto Serif JP',serif",
+    "body": "'Hiragino Sans','Hiragino Kaku Gothic ProN','Yu Gothic','Noto Sans JP',Meiryo,sans-serif"
+  },
+  "img": {
+    "scene1": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-hero.jpg?v=1790070105",
+    "scene2": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-walk-strong.jpg?v=1792501958",
+    "scene2Alt": "外を歩く女性",
+    "scene3": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-scene3-person.jpg?v=1792503463"
+  },
+  "sample": {
+    "name": "佐藤",
+    "checkout": "https://kokochidry.shop/",
+    "code4": "KD-7Q4M2X",
+    "deadline4": "10月23日（金）23時59分",
+    "cart": [
+      {
+        "title": "ここちドライ<br><span style=\"white-space:nowrap\">吸水ショーツ（5枚セット）</span>",
+        "variant": "クラシック / M",
+        "qty": 1,
+        "price": 17890,
+        "extra": "洗濯ネット1個つき<br>送料無料",
+        "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-pink-20260910-classic-5.png?v=1789113434"
+      }
+    ],
+    "e4Chosen": "クラシック / M・5枚セット"
+  },
+  "contact": {
+    "mail": "support@example.com",
+    "reply": "平日、1〜3日でお返事します。",
+    "topics": "サイズや洗い方",
+    "e4Help": "サイズのことも、洗い方のことも、<br>迷っていることをそのまま書いてください。"
+  },
+  "company": "〈会社の名前〉　〈会社の住所〉",
+  "signer": {
+    "name": "〈販売責任者の名前〉",
+    "role": "ここちドライ 販売責任者"
+  },
+  "e2": {
+    "subject": "紙パンツを買い足さない毎日まで、あと一歩です",
+    "promise": "お手続きを終えると、<br><em>紙パンツを買い足さない毎日</em>が<br>始まります。",
+    "cartExtra": {
+      "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-net.jpg?v=1790070105",
+      "title": "洗濯ネット<br><span style=\"white-space:nowrap\">（セットに無料でつきます）</span>"
+    },
+    "affirm": "ここちドライを見てくださったのは、<br>我慢しない毎日を選びたいから。<br>その選び方で、合っています。",
+    "proof": "<b>レビュー2,657件の平均は★4.7。</b><br>累計の販売は10,000件を超えました。",
+    "voices": [
+      {
+        "who": "松井 京子さん",
+        "head": "湯船の日が戻った",
+        "body": "脱衣所で見られるのが怖くて、温泉を避けていました。これなら脱いでも普通の下着。先月、友人と久しぶりに行けて、隣で普通に着替えられました。",
+        "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-voice-onsen.jpg?v=1792489382"
+      },
+      {
+        "who": "田中 久子さん",
+        "head": "細身の服を楽しめる",
+        "body": "一番の心配は、薄いパンツにラインが出ることでした。ベージュのスキニーをはいて、家族に後ろから見てもらいましたが「何も分からない」と。お尻が隠れる長い上着を、もう選ばなくてよくなりました。",
+        "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-voice-line.jpg?v=1792489382"
+      },
+      {
+        "who": "長谷川 厚子さん",
+        "head": "後始末が軽くなった",
+        "body": "娘に見られたくなくて、紙パンツはゴミ袋を二重にして捨てていました。洗えるので、そういう気苦労が全部なくなりました。",
+        "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-voice-hosu.jpg?v=1792489382"
+      }
+    ],
+    "authority": {
+      "head": "専門家は、<br>こう話しています",
+      "lead": "ここちドライを作った側の、<br>泌尿器科の医師の言葉です。",
+      "cards": [
+        {
+          "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-expert-takase.jpg?v=1792505217",
+          "head": "家でできる、<br>ひとつの確かめ方",
+          "body": "私は作った側の人間なので、中立ではありません。うちの実験を信じなくてかまいません。いま使っているパッドを平らに置いて、大さじ2杯の水を一度に落としてみてください。下に敷いた紙が濡れたら、それが今はいている物の限界です",
+          "src": "高瀬 真紀 医師（泌尿器科専門医）"
+        }
+      ],
+      "note": "※専門家のコメントは、個人の見解です。"
+    },
+    "guarantee": {
+      "head": "30日間の返金保証",
+      "body": "届いてから25日はいて試したうえで、合わなければ30日目までに返金を申し込めます。手数料などの条件は<a href=\"https://kokochidry.shop/policies/refund-policy\" style=\"color:inherit\">返金ポリシー</a>でご確認いただけます。",
+      "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-icon-cal-line.png?v=1792503463"
+    },
+    "badges": [
+      {
+        "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-icon-cal-line.png?v=1792503463",
+        "label": "30日間の<br>返金保証"
+      },
+      {
+        "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-icon-ship-line.png?v=1792503463",
+        "label": "送料無料"
+      },
+      {
+        "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-mail-icon-size-line.png?v=1792503462",
+        "label": "8サイズ"
+      }
+    ]
+  },
+  "e3": {
+    "subject": "「人目を気にせずに済みました」",
+    "headline": "「紙パンツを<br>荷物に詰める必要がなく、<br>着替えの時も<br>人目を気にせずに<br>済みました。」",
+    "offer": {
+      "code": "KOKOCHI2000",
+      "yen": 2000
+    },
+    "voicesHead": "私たちの言葉だけでなく、<br>はいた人の声を。",
+    "rating": "★4.7／5　<b>2,657件</b>のレビュー",
+    "noOfferPreheader": "はいた人の声をお届けします。",
+    "verified": "✓購入者",
+    "voices": [
+      {
+        "who": "石田 恵美子さん",
+        "head": "漏れの不安が晴れた",
+        "body": "見た目が普通なぶん、本当に吸うのか疑っていました。最初の3日は家で試して、くしゃみも咳も大丈夫だったので外へ。薄いのに、ズボンまで染みたことは一度もありません。"
+      },
+      {
+        "who": "村上 静子さん",
+        "head": "人混みが平気になった",
+        "body": "においが心配で、人の隣に座るのを避けていました。夕方になっても、さらっとしたまま。<br>気にしすぎていた自分に気づきました。"
+      },
+      {
+        "who": "岡本 道子さん",
+        "head": "見た目で選んでよかった",
+        "body": "「年寄りの下着」みたいな形なら返品しようと思っていました。深ばきすぎず、レースもなく、形はいつものショーツ。これなら毎日はけます。"
+      }
+    ],
+    "choices": {
+      "head": "ほかの選び方",
+      "items": [
+        {
+          "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-pink-20260910-classic-10.png?v=1789113434",
+          "label": "10枚セット",
+          "note": "洗い替えを回したい方に",
+          "price": 23890,
+          "url": "https://kokochidry.shop/products/kokochidry?variant=50141156606090"
+        },
+        {
+          "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-pink-20260910-classic-15.png?v=1789113434",
+          "label": "15枚セット",
+          "note": "毎日を全部ここちドライに",
+          "price": 29890,
+          "url": "https://kokochidry.shop/products/kokochidry?variant=50141156638858"
+        },
+        {
+          "img": "https://cdn.shopify.com/s/files/1/0719/9283/6234/files/kd-pink-20260910-beige-5.png?v=1789113434",
+          "label": "ベージュ 5枚",
+          "note": "明るい色の服が多い方に",
+          "price": 17890,
+          "url": "https://kokochidry.shop/products/kokochidry?variant=50141156868234"
+        }
+      ]
+    },
+    "links": [
+      [
+        "サイズの選び方",
+        "/products/kokochidry#size"
+      ],
+      [
+        "洗い方",
+        "/products/kokochidry#care"
+      ],
+      [
+        "返金保証",
+        "/policies/refund-policy"
+      ],
+      [
+        "よくある質問",
+        "/products/kokochidry#faq"
+      ]
+    ]
+  },
+  "check": {
+    "ng": [
+      "コップ1杯",
+      "200ml",
+      "4層",
+      "綿80%",
+      "共同開発",
+      "患者200名",
+      "全額",
+      "損はゼロ"
+    ],
+    "reviewsSource": "<作業場>/店のレビュー.tsv",
+    "noFillColor": "#3d2129",
+    "facts": [
+      "<作業場>/店の事実.txt",
+      "<店の作業場>/本番の写し/assets/kd2.js",
+      "<商品フォルダ>/カゴ落ちメール 4通の設計.md"
+    ],
+    "expertsSource": "<作業場>/店の専門家.tsv"
+  }
+}

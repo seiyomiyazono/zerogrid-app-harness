@@ -1,0 +1,30 @@
+{
+ "_説明": "会社の情報。運営者ごとに1回入れる。項目の意味と聞き方は skills/ec-ad-ops/references/operator-intake.md。空の所は AI が聞く。 値は全部空（null）で置く。初期値は ~/.agents/skills/ec-ad-ops/scripts/store-legal/questions.json にあり、運営者が「初期値でよい」と答えた物だけ AI が入れる。",
+ "legal_name": null,
+ "entity_type": null,
+ "representative_name": null,
+ "responsible_name": null,
+ "postal_code": null,
+ "address": null,
+ "phone": null,
+ "phone_support": null,
+ "disclose_on_request": {
+  "address": null,
+  "phone": null,
+  "email": null
+ },
+ "return_address": {
+  "postal_code": null,
+  "address": null,
+  "recipient": null
+ },
+ "court": null,
+ "business_days": null,
+ "cs_staff_name": null,
+ "privacy_established": null,
+ "connections": {
+  "_説明": "使う人のアカウントの置き場。値（鍵）はここに書かない。~/.config/secrets/ のファイル名だけ書く",
+  "gmail_oauth_env": null,
+  "google_sheets_oauth_env": null
+ }
+}

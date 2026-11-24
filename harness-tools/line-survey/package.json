@@ -1,0 +1,2 @@
+{ "name": "line-survey", "private": true, "type": "module", "engines": { "node": ">=20" },
+  "scripts": { "check": "node scripts/check.mjs", "test": "node test/e2e.mjs && node test/e2e-fitcheck.mjs && node test/golden-tenant.mjs && node test/check-negative.mjs" } }

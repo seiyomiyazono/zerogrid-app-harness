@@ -1,0 +1,807 @@
+{
+ "_説明": "運営者に聞く項目の正本。operator-intake.md の表と、render.mjs の『足りない値』の判定は、このファイルから作る。level=会社/ストア/商品。key は profile の JSON の場所。required=true は値が無いと書類を出さない。when は、その条件の時だけ聞く。auto は AI が先に調べる場所。 example は架空の見本（実在の会社・店の値を入れない）。",
+ "version": "2026-10-20",
+ "questions": [
+  {
+   "level": "会社",
+   "key": "operator.legal_name",
+   "q": "販売する会社の正式な名前（個人なら屋号ではなく、お名前）を教えてください。",
+   "why": "特商法11条（事業者の氏名・名称）。全部の書類の「当社」",
+   "required": true,
+   "example": "株式会社サンプル商事",
+   "validate": "^.{2,60}$",
+   "auto": "Shopify の請求先（billingAddress.company）"
+  },
+  {
+   "level": "会社",
+   "key": "operator.entity_type",
+   "q": "会社（法人）ですか、個人の事業ですか。",
+   "why": "法人は代表者か責任者の名前が要る（特商法11条・施行規則）",
+   "required": true,
+   "default": "corporation",
+   "options": [
+    "corporation",
+    "sole_proprietor"
+   ],
+   "example": "corporation"
+  },
+  {
+   "level": "会社",
+   "key": "operator.representative_name",
+   "q": "代表者のお名前を教えてください。",
+   "why": "特商法（法人は代表者または通信販売の責任者）・プライバシーポリシー（個人情報保護法32条：法人は代表者の氏名）",
+   "required": true,
+   "example": "山田太郎",
+   "validate": "^.{2,40}$"
+  },
+  {
+   "level": "会社",
+   "key": "operator.responsible_name",
+   "q": "通信販売の責任者は、代表者と同じ方ですか。違う時はお名前を教えてください。",
+   "why": "特商法の「販売責任者名」",
+   "required": false,
+   "default": "= operator.representative_name",
+   "example": "山田太郎"
+  },
+  {
+   "level": "会社",
+   "key": "operator.postal_code",
+   "q": "会社の郵便番号を教えてください。",
+   "why": "特商法11条（住所）・プライバシーポリシー（住所）・利用規約の連絡先",
+   "required": true,
+   "example": "100-0001",
+   "validate": "^\\d{3}-\\d{4}$",
+   "auto": "Shopify の請求先（billingAddress.zip）"
+  },
+  {
+   "level": "会社",
+   "key": "operator.address",
+   "q": "会社の住所を、建物名・部屋番号まで教えてください。",
+   "why": "同上。表に出さない選び方をしても、プライバシーポリシーには住所が要る（個人情報保護法32条）",
+   "required": true,
+   "example": "東京都千代田区千代田1-1 サンプルビル101",
+   "validate": "^.{6,120}$",
+   "auto": "Shopify の請求先（billingAddress）"
+  },
+  {
+   "level": "会社",
+   "key": "operator.phone",
+   "q": "電話番号を入れてください。お店のページには表示されません（お客さまから請求があった時だけ、メールでお伝えします）。",
+   "why": "特商法11条（電話番号）。ページには「ご請求をいただければ、遅滞なく開示いたします」と書き、番号は請求があった時だけ伝える",
+   "required": true,
+   "example": "03-0000-0000",
+   "validate": "^0\\d{1,4}-\\d{1,4}-\\d{3,4}$",
+   "auto": "Shopify の請求先（billingAddress.phone）"
+  },
+  {
+   "level": "会社",
+   "key": "operator.phone_support",
+   "q": "電話でのお問い合わせを受けますか。",
+   "why": "特商法の表記とフォームの注意書き（「お電話でのご対応は行っておりません」）",
+   "required": true,
+   "default": false,
+   "options": [
+    true,
+    false
+   ],
+   "example": false
+  },
+  {
+   "level": "会社",
+   "key": "operator.disclose_on_request",
+   "q": "特商法のページで、住所・電話・メールのうち「ご請求をいただければ、遅滞なく開示いたします」と書く物はありますか（初期値：住所は載せる、電話とメールは載せない（請求があった時だけ伝える））。",
+   "why": "特商法11条ただし書。省くには、請求があれば遅滞なく出す旨を書き、実際にすぐ出せる用意が要る。条件があるので、使う前に専門家に確かめる",
+   "required": true,
+   "default": {
+    "address": false,
+    "phone": true,
+    "email": true
+   },
+   "example": {
+    "address": false,
+    "phone": true,
+    "email": true
+   },
+   "note": "消費者庁 https://www.no-trouble.caa.go.jp/what/mailorder/ 。返品の決まり・前払いの支払時期は省けない"
+  },
+  {
+   "level": "会社",
+   "key": "operator.return_address",
+   "q": "お客さま都合の返品を送ってもらう住所と、宛名を教えてください。",
+   "why": "返品・返金ポリシーと CS の返信（返送先）。特商法15条の3（返品特約）の手続きの説明",
+   "required": true,
+   "default": "= 会社の住所＋「<ショップ名> 返品係」",
+   "example": {
+    "postal_code": "100-0001",
+    "address": "東京都千代田区千代田1-1 サンプルビル101",
+    "recipient": "株式会社サンプル商事 サンプルショップ返品係"
+   }
+  },
+  {
+   "level": "会社",
+   "key": "operator.court",
+   "q": "もめごとになった時の裁判所は、会社の近くの地方裁判所でよいですか。",
+   "why": "利用規約の管轄",
+   "required": true,
+   "default": "= 所在地の都道府県の地方裁判所",
+   "example": "東京地方裁判所"
+  },
+  {
+   "level": "会社",
+   "key": "operator.business_days",
+   "q": "お返事と返金の手続きをする曜日を教えてください。",
+   "why": "返金ポリシー・連絡先情報・CS の期限計算",
+   "required": true,
+   "default": "月曜日から金曜日",
+   "example": "月曜日から金曜日"
+  },
+  {
+   "level": "会社",
+   "key": "operator.cs_staff_name",
+   "q": "お客さまへのメールの最後に書く、担当者のお名前を教えてください（苗字だけで大丈夫です）。",
+   "why": "CS の署名",
+   "required": true,
+   "example": "山田",
+   "validate": "^.{1,20}$"
+  },
+  {
+   "level": "会社",
+   "key": "operator.privacy_established",
+   "q": "プライバシーポリシーの制定日は今日でよいですか。",
+   "why": "プライバシーポリシーの末尾",
+   "required": true,
+   "default": "= 今日",
+   "example": "2026年1月1日"
+  },
+  {
+   "level": "ストア",
+   "key": "store.shop_name",
+   "q": "お店の名前（お客さまに見える名前）を教えてください。",
+   "why": "全部の書類・フォーム・署名",
+   "required": true,
+   "example": "サンプルショップ",
+   "auto": "Shopify shop.name"
+  },
+  {
+   "level": "ストア",
+   "key": "store.store_url",
+   "q": "お店の URL を教えてください（独自ドメインがあればそれ）。",
+   "why": "特商法（ホームページ）・フォームの URL",
+   "required": true,
+   "example": "https://sample-shop.example.com",
+   "validate": "^https://[^/ ]+$",
+   "auto": "Shopify shop.primaryDomain.url"
+  },
+  {
+   "level": "ストア",
+   "key": "store.contact_path",
+   "q": "お問い合わせページの場所は /pages/contact でよいですか。",
+   "why": "全部の書類の「お問い合わせフォーム」",
+   "required": true,
+   "default": "/pages/contact",
+   "example": "/pages/contact"
+  },
+  {
+   "level": "ストア",
+   "key": "store.cs_email",
+   "q": "お問い合わせを受けるメールアドレスを教えてください（Gmail でつなぎます）。",
+   "why": "特商法（メール）・連絡先情報・CS の受信箱",
+   "required": true,
+   "example": "support@sample-shop.example.com",
+   "validate": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+   "auto": "Shopify shop.contactEmail"
+  },
+  {
+   "level": "ストア",
+   "key": "store.payment_methods",
+   "q": "このお店で使える支払い方法を教えてください。",
+   "why": "特商法11条（支払方法）",
+   "required": true,
+   "example": [
+    "クレジットカード（Visa / Mastercard / American Express / JCB）",
+    "Apple Pay",
+    "Google Pay",
+    "Shop Pay"
+   ],
+   "auto": "お店のフッターの決済アイコン・Shopify の支払い設定（API では全部は取れない。見た物を見せて確かめる）"
+  },
+  {
+   "level": "ストア",
+   "key": "store.deferred_payment",
+   "q": "コンビニ払い・銀行振込など、後から払う方法はありますか。",
+   "why": "特商法（入金が無い時のキャンセルの文）",
+   "required": true,
+   "default": false,
+   "options": [
+    true,
+    false
+   ],
+   "example": false
+  },
+  {
+   "level": "ストア",
+   "key": "store.shipping_fee",
+   "q": "送料はどうしますか。",
+   "why": "特商法11条（販売価格・送料）",
+   "required": true,
+   "default": "全国送料無料",
+   "example": "全国送料無料"
+  },
+  {
+   "level": "ストア",
+   "key": "store.ship_days",
+   "q": "注文から発送までの日数の目安を教えてください（初期値 7〜14営業日。変えられます）。",
+   "why": "特商法11条（引渡時期）・配送ポリシー",
+   "required": true,
+   "default": "7〜14営業日",
+   "example": "7〜14営業日"
+  },
+  {
+   "level": "ストア",
+   "key": "store.delivery_days",
+   "q": "注文から届くまでの日数の目安と、最大の日数を教えてください（初期値 10〜30日・最大40日。変えられます）。",
+   "why": "同上",
+   "required": true,
+   "default": {
+    "usual": "10〜30日",
+    "max": 40
+   },
+   "example": {
+    "usual": "10〜30日",
+    "max": 40
+   }
+  },
+  {
+   "level": "ストア",
+   "key": "store.delivery_watch",
+   "q": "届かない時の目安の日数は、この3つでよいですか：注文から◯日で発送通知が無ければ連絡（21）、発送から◯日までは通常の配送（20）、発送から◯日で届かなければ未着として調べる（30）。",
+   "why": "配送ポリシー・返金ポリシー・CS の期限",
+   "required": true,
+   "default": {
+    "no_ship_notice": 21,
+    "normal": 20,
+    "lost_after": 30
+   },
+   "example": {
+    "no_ship_notice": 21,
+    "normal": 20,
+    "lost_after": 30
+   }
+  },
+  {
+   "level": "ストア",
+   "key": "store.ship_origin",
+   "q": "発送元をどう書きますか。「当社の倉庫」「当社の海外倉庫」「国内の倉庫」から選んでください。",
+   "why": "配送ポリシー・利用規約の発送元。プライバシーポリシーの外国への提供の書き方も変わる",
+   "required": true,
+   "default": "warehouse",
+   "options": [
+    "warehouse",
+    "overseas_warehouse",
+    "domestic"
+   ],
+   "example": "warehouse",
+   "pending": "P3"
+  },
+  {
+   "level": "ストア",
+   "key": "store.cross_border",
+   "q": "お客さまの名前・住所を、海外の会社（仕入れ先・倉庫・配送）に渡しますか。",
+   "why": "プライバシーポリシー（個人情報保護法28条：外国にある第三者への提供。同意か、相手の国の制度などの情報提供が要る）。CS のメールに「海外」と書かないことと、ポリシーに書くことは別。書き方は専門家に確かめる",
+   "required": true,
+   "default": true,
+   "options": [
+    true,
+    false
+   ],
+   "example": true,
+   "pending": "P3"
+  },
+  {
+   "level": "ストア",
+   "key": "store.cancel_refund_timing",
+   "q": "キャンセルを受けた時、返金が終わるまでの最大の日数を教えてください。",
+   "why": "配送ポリシー・返金ポリシー（返金の時期）",
+   "required": true,
+   "default": "max_days",
+   "options": [
+    "max_days",
+    "business_days_7_10"
+   ],
+   "example": "max_days",
+   "pending": "P5"
+  },
+  {
+   "level": "ストア",
+   "key": "store.refund_max_days",
+   "q": "返金が確定してから、お客さまに入金されるまでの最大の日数は何日ですか（初期値 60日。変えられます）。",
+   "why": "返金ポリシー6章",
+   "required": true,
+   "default": 60,
+   "example": 60,
+   "validate": "^\\d{1,3}$"
+  },
+  {
+   "level": "ストア",
+   "key": "store.return_shipping_payer",
+   "q": "お客さま都合で返品する時の送料は、だれが払いますか（初期値：お客さま）。",
+   "why": "返金ポリシー・特商法・CS",
+   "required": true,
+   "default": "customer",
+   "options": [
+    "customer",
+    "shop"
+   ],
+   "example": "customer"
+  },
+  {
+   "level": "ストア",
+   "key": "store.refund_batch",
+   "q": "返金は、一定の期間ごとにまとめて手続きしますか（はいなら、ポリシーと返事に「少人数で運営しており、まとめて手続きしています」と書きます）。",
+   "why": "返金ポリシーの返金の手続き・CS",
+   "required": true,
+   "default": true,
+   "example": true
+  },
+  {
+   "level": "ストア",
+   "key": "store.cs_keep_days",
+   "q": "解決したお問い合わせの記録を、解決から何日残しますか（初期値：返金が入金されるまでの最大日数＋30日）。",
+   "why": "CS（お客さまごとの記録の保存期間）。書類には出さない",
+   "required": false,
+   "default": "= store.refund_max_days + 30",
+   "example": 90,
+   "validate": "^\\d{1,4}$"
+  },
+  {
+   "level": "ストア",
+   "key": "store.change_address",
+   "q": "発送前の住所の変更を受けますか（初期値：受ける）。",
+   "why": "配送ポリシー「ご注文後の変更」・CS",
+   "required": true,
+   "default": "accept",
+   "options": [
+    "accept",
+    "no"
+   ],
+   "example": "accept"
+  },
+  {
+   "level": "ストア",
+   "key": "store.change_items",
+   "q": "発送前の、商品・数量・サイズ・色の変更を受けますか（初期値：受ける）。",
+   "why": "同上",
+   "required": true,
+   "default": "accept",
+   "options": [
+    "accept",
+    "no"
+   ],
+   "example": "accept"
+  },
+  {
+   "level": "ストア",
+   "key": "store.cancel_before_ship",
+   "q": "発送前のキャンセルは、どうしますか（初期値：理由を聞いて決める）。「理由を聞いて決める（二重注文・当社の遅れなどは受ける。注文の間違い・急に要らなくなった等のお客さま都合は受けず、サイズ・色・数量・お届け先の変更で解決できる時は変更で対応）」「理由を問わず受ける」「受けない」から選んでください。",
+   "why": "同上",
+   "required": true,
+   "default": "reason",
+   "options": [
+    "reason",
+    "accept",
+    "no"
+   ],
+   "example": "reason"
+  },
+  {
+   "level": "ストア",
+   "key": "store.after_ship_address",
+   "q": "発送した後の住所の変更・転送・再配達・日時の変更は、どうしますか（初期値：お客さまから配送会社へ頼んでもらう）。",
+   "why": "配送ポリシー・CS",
+   "required": true,
+   "default": "customer",
+   "options": [
+    "customer",
+    "shop"
+   ],
+   "example": "customer"
+  },
+  {
+   "level": "ストア",
+   "key": "store.cancel_after_ship",
+   "q": "発送した後のキャンセルは、どうしますか（初期値：届いてから返品の決まりで受ける）。「返品の決まりで受ける」「受け取りを断ってもらい、戻ったら返金（送料を引く）」「受けない」から選んでください。",
+   "why": "同上",
+   "required": true,
+   "default": "return_policy",
+   "options": [
+    "return_policy",
+    "refuse_refund",
+    "no"
+   ],
+   "example": "return_policy"
+  },
+  {
+   "level": "ストア",
+   "key": "store.undeliverable",
+   "q": "お客さまの側の理由（受け取り拒否・住所の間違い・不在で保管期限切れ）で荷物が戻った時は、どうしますか（初期値：その都度決める）。「送料をいただいて送り直す」「送料を引いて返金」「その都度決める」から選んでください。",
+   "why": "配送ポリシー・CS",
+   "required": true,
+   "default": "ask",
+   "options": [
+    "reship_paid",
+    "refund_minus_shipping",
+    "ask"
+   ],
+   "example": "ask"
+  },
+  {
+   "level": "ストア",
+   "key": "store.delivery_date_spec",
+   "q": "お届けの日時の指定を受けますか（初期値：受けない）。",
+   "why": "配送ポリシー・CS",
+   "required": true,
+   "default": false,
+   "options": [
+    true,
+    false
+   ],
+   "example": false
+  },
+  {
+   "level": "ストア",
+   "key": "store.duplicate_order",
+   "q": "同じ注文を2回してしまった時は、どうしますか（初期値：片方をキャンセルして全額を返金）。",
+   "why": "CS（書類には出さない）",
+   "required": true,
+   "default": "cancel_one",
+   "options": [
+    "cancel_one",
+    "ask"
+   ],
+   "example": "cancel_one"
+  },
+  {
+   "level": "ストア",
+   "key": "store.price_adjust",
+   "q": "買った後の値下げ・クーポンの使い忘れの差額を返しますか（初期値：返さない）。",
+   "why": "CS（書類には出さない）",
+   "required": true,
+   "default": "no",
+   "options": [
+    "no",
+    "refund_diff"
+   ],
+   "example": "no"
+  },
+  {
+   "level": "ストア",
+   "key": "store.receipt",
+   "q": "領収書を求められたら出しますか（初期値：出す。Shopify の注文から作って送る）。",
+   "why": "CS（書類には出さない）",
+   "required": true,
+   "default": true,
+   "options": [
+    true,
+    false
+   ],
+   "example": true
+  },
+  {
+   "level": "ストア",
+   "key": "store.cs_reply",
+   "q": "お問い合わせへのお返事の目安は「送信後1〜3日以内」でよいですか。",
+   "why": "連絡先情報・利用規約・フォームの注意書き",
+   "required": true,
+   "default": "送信後1〜3日以内",
+   "example": "送信後1〜3日以内"
+  },
+  {
+   "level": "ストア",
+   "key": "store.supplier",
+   "q": "仕入れ先（サプライヤー）との連絡は、Discord・メール・WeChat のどれですか。相手の呼び名と、チャンネルの URL かアドレスも教えてください。",
+   "why": "CS（取消・再送・返金の依頼先）。書類には出さない",
+   "required": false,
+   "example": {
+    "name": "仕入れ先の担当",
+    "channel": "discord",
+    "address": "https://discord.com/channels/…"
+   }
+  },
+  {
+   "level": "ストア",
+   "key": "store.theme",
+   "q": "お問い合わせページの色は、お店の色を使います。メインの色とボタンの色を確かめさせてください。",
+   "why": "フォームの見た目",
+   "required": false,
+   "default": {
+    "primary": "#1F2937",
+    "accent": "#111111"
+   },
+   "auto": "テーマの settings_data.json（colors）を読む"
+  },
+  {
+   "level": "ストア",
+   "key": "store.privacy_processors",
+   "q": "注文の情報を渡している会社の種類（決済・配送・倉庫・アクセス解析・広告）に、足すものはありますか。",
+   "why": "プライバシーポリシー（業務委託）",
+   "required": false,
+   "default": [
+    "決済代行会社",
+    "配送業者",
+    "商品の発送を行う倉庫事業者",
+    "ECプラットフォーム提供事業者",
+    "アクセス解析事業者"
+   ]
+  },
+  {
+   "level": "商品",
+   "key": "product.product_name",
+   "q": "商品の呼び名を教えてください。",
+   "why": "返金ポリシー・フォームの説明",
+   "required": true,
+   "example": "サンプル商品",
+   "auto": "商品フォルダの 00_入口.md・naming.md"
+  },
+  {
+   "level": "商品",
+   "key": "product.return_type",
+   "q": "お客さま都合の返品は、どの形で受けますか。「使ってから申し込める返金保証」「未使用なら到着から◯日以内に返品できる」「受けない（不良・破損だけ対応）」から選んでください。",
+   "why": "返金ポリシー・特商法の返品の節・利用規約・CS の返事",
+   "required": true,
+   "default": "guarantee",
+   "options": [
+    "guarantee",
+    "unused",
+    "none"
+   ],
+   "example": "guarantee"
+  },
+  {
+   "level": "商品",
+   "key": "product.unused_days",
+   "q": "未使用の返品は、商品到着日から何日以内なら受けますか。",
+   "why": "同上",
+   "required": true,
+   "when": "product.return_type == unused",
+   "default": 8,
+   "example": 8,
+   "validate": "^\\d{1,3}$"
+  },
+  {
+   "level": "商品",
+   "key": "product.partial_refund",
+   "q": "同じ注文で複数買った人が、一部だけ返品するのを受けますか（初期値：受けない）。",
+   "why": "返金ポリシーの返品の条件・CS",
+   "required": true,
+   "default": false,
+   "example": false
+  },
+  {
+   "level": "商品",
+   "key": "product.guarantee_once",
+   "q": "返金保証は、1回の注文につき1回までにしますか（初期値：はい）。",
+   "why": "返金ポリシーの保証の条件",
+   "required": true,
+   "when": "product.return_type == guarantee",
+   "default": true,
+   "example": true
+  },
+  {
+   "level": "商品",
+   "key": "product.guarantee_days",
+   "q": "返金保証は何日にしますか（初期値 30日。45日・60日などに変えられます。使ってから申し込んでもらう日数は、いつもこの半分になります）。",
+   "why": "特商法15条の3（返品特約）・返金ポリシー・特商法の表記・規約7条・フォーム",
+   "required": true,
+   "default": 30,
+   "example": 30,
+   "validate": "^\\d{1,3}$",
+   "when": "product.return_type == guarantee"
+  },
+  {
+   "level": "商品",
+   "key": "product.use_days",
+   "q": "使ってから申し込んでもらう日数（自動で決まります：返金保証の日数の半分。割り切れない時は切り上げ。この日数を過ぎるまでは受けません）。",
+   "why": "同上",
+   "required": false,
+   "default": "= product.guarantee_days の半分（切り上げ）",
+   "example": 15,
+   "validate": "^\\d{1,3}$",
+   "when": "product.return_type == guarantee",
+   "derived": true
+  },
+  {
+   "level": "商品",
+   "key": "product.refund_rate",
+   "q": "返金するのは、支払った金額の何％ですか（初期値 100＝全額）。",
+   "why": "同上。100 でない時は「返金保証」「全額」と書けない",
+   "required": true,
+   "default": 100,
+   "example": 100,
+   "validate": "^(100|[1-9]\\d?)$"
+  },
+  {
+   "level": "商品",
+   "key": "product.early_refund",
+   "q": "使う日数より前の申し込みは、受けないでよいですか（初期値：受けない）。",
+   "why": "同上",
+   "required": true,
+   "default": "none",
+   "options": [
+    "none",
+    "partial"
+   ],
+   "example": "none",
+   "pending": "P1",
+   "when": "product.return_type == guarantee"
+  },
+  {
+   "level": "商品",
+   "key": "product.early_refund_rate",
+   "q": "早い申し込みにも返す時、何％返しますか。",
+   "why": "同上",
+   "required": true,
+   "when": "product.early_refund == partial",
+   "example": 30
+  },
+  {
+   "level": "商品",
+   "key": "product.reason_sentence",
+   "q": "なぜすぐには結果が分からないのか、使い続けてほしい理由を1文で教えてください（AI が商品理解の基盤から案を出します）。",
+   "why": "返金ポリシー・特商法の返品の節（先に理由、後に条件）",
+   "required": true,
+   "example": "本商品は、使い方に慣れ、効果を十分にご実感いただくまでに一定の期間を要するため",
+   "auto": "01_商品理解の基盤 の A（慣らし）・H・I",
+   "when": "product.return_type == guarantee"
+  },
+  {
+   "level": "商品",
+   "key": "product.defect",
+   "q": "不良・破損・欠品・違う商品の時の受け方を選んでください（初期値：期間の条件なし・送り返し不要・再送か返金を選んでもらう）。",
+   "why": "返金ポリシー・特商法の表記・CS",
+   "required": true,
+   "default": {
+    "claim_days": null,
+    "return_required": false
+   },
+   "example": {
+    "claim_days": null,
+    "return_required": false
+   },
+   "pending": "P4"
+  },
+  {
+   "level": "商品",
+   "key": "product.exchange",
+   "q": "サイズや色の交換を受けますか。",
+   "why": "返金ポリシー・規約7条（交換の節）",
+   "required": true,
+   "default": {
+    "enabled": false
+   },
+   "example": {
+    "enabled": false
+   }
+  },
+  {
+   "level": "商品",
+   "key": "product.exchange_days",
+   "q": "交換は、商品到着日から何日以内なら受けますか（初期値 8日）。",
+   "why": "返金ポリシーの交換の節・CS",
+   "required": true,
+   "when": "product.exchange.enabled == true",
+   "default": 8,
+   "example": 8,
+   "validate": "^\\d{1,3}$"
+  },
+  {
+   "level": "商品",
+   "key": "product.exchange_condition",
+   "q": "交換できるのは、未使用・未開封の物だけですか（初期値：はい）。",
+   "why": "同上",
+   "required": true,
+   "when": "product.exchange.enabled == true",
+   "default": "unused",
+   "options": [
+    "unused",
+    "any"
+   ],
+   "example": "unused"
+  },
+  {
+   "level": "商品",
+   "key": "product.exchange_shipping",
+   "q": "交換の送料（送り返す分と、新しい物を送る分）は、だれが払いますか（初期値：お客さま）。",
+   "why": "同上",
+   "required": true,
+   "when": "product.exchange.enabled == true",
+   "default": "customer",
+   "options": [
+    "customer",
+    "shop"
+   ],
+   "example": "customer"
+  },
+  {
+   "level": "商品",
+   "key": "product.body_use",
+   "q": "体に使う・体の不調に関わる商品ですか（はいなら免責の文を足します）。",
+   "why": "特商法の表記・規約8条・返金ポリシー（医療上の効果を約束しない）",
+   "required": true,
+   "default": true,
+   "options": [
+    true,
+    false
+   ],
+   "example": true
+  },
+  {
+   "level": "商品",
+   "key": "product.subscription",
+   "q": "定期便はありますか（Shopify に定期の販売プランがあれば自動で分かります）。ある時は、届く間隔と、解約のしかたを教えてください。",
+   "why": "特商法11条（2回以上の継続契約の条件）・定期便ポリシー",
+   "required": true,
+   "default": {
+    "enabled": false
+   },
+   "auto": "Shopify sellingPlanGroups"
+  },
+  {
+   "level": "商品",
+   "key": "product.subscription.name",
+   "q": "定期便の名前を教えてください。",
+   "why": "特商法11条（2回以上継続して契約する時は、その旨と販売条件）・定期便ポリシー",
+   "required": true,
+   "when": "product.subscription.enabled == true",
+   "example": "サンプル定期便"
+  },
+  {
+   "level": "商品",
+   "key": "product.subscription.interval",
+   "q": "届く間隔を教えてください。",
+   "why": "特商法11条（2回以上継続して契約する時は、その旨と販売条件）・定期便ポリシー",
+   "required": true,
+   "when": "product.subscription.enabled == true",
+   "example": "30日"
+  },
+  {
+   "level": "商品",
+   "key": "product.subscription.billing",
+   "q": "お支払いの時期を教えてください。",
+   "why": "特商法11条（2回以上継続して契約する時は、その旨と販売条件）・定期便ポリシー",
+   "required": true,
+   "when": "product.subscription.enabled == true",
+   "example": "各回の発送前に、登録のお支払い方法で自動でお支払い"
+  },
+  {
+   "level": "商品",
+   "key": "product.subscription.cancel_method",
+   "q": "解約のしかたを、お客さま向けの言葉で教えてください。",
+   "why": "特商法11条（2回以上継続して契約する時は、その旨と販売条件）・定期便ポリシー",
+   "required": true,
+   "when": "product.subscription.enabled == true",
+   "example": "お問い合わせフォームの「定期便を解約・変更したい」からご連絡ください。当社で解約の手続きをいたします"
+  },
+  {
+   "level": "商品",
+   "key": "product.guarantee_name",
+   "q": "保証の名前は「◯日間返金保証」でよいですか。",
+   "why": "全部の場所で同じ名前にする（store-legal.md 4章）",
+   "required": true,
+   "default": "= <日数>日間返金保証（返金が100％でない時は「お試し保証」）",
+   "example": "30日間返金保証",
+   "when": "product.return_type == guarantee"
+  },
+  {
+   "level": "商品",
+   "key": "product.cs_howto",
+   "q": "「効果がない・使ってくれない」と言われた時に案内する、使い方のコツを3〜6個教えてください（AI が商品理解の基盤から案を出します）。",
+   "why": "CS の返信（返金の話より先に対処法を書く。CS対応.md 10/5・10/15）。書類には出さない",
+   "required": false,
+   "example": [
+    "最初の数日は、短い時間から使ってみてください",
+    "説明書の置き方・使い方をもう一度ご確認ください"
+   ],
+   "auto": "01_商品理解の基盤 の A（使い方・慣らし）・I"
+  }
+ ]
+}

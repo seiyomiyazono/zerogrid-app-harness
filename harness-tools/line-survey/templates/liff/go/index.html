@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>購入手続きへ</title>
+<style>body{margin:0;font-family:"Noto Sans JP",-apple-system,sans-serif;background:__SOFT__;color:__INK__}.w{max-width:420px;margin:0 auto;padding:60px 20px;text-align:center}h1{font-size:18px}p{font-size:13px;color:#3b4b5e;line-height:1.8}a{color:#1c65ad}</style></head>
+<body><div class="w"><h1>購入手続きへ進んでいます…</h1><p id="p">そのままお待ちください。</p></div>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script>
+(async function(){
+  var LIFF_ID = '__LIFF_ID__'; var SITE = '__SITE__';
+  function param(){ var q = new URLSearchParams(location.search); var st = q.get('liff.state'); if (st) { try { q = new URLSearchParams(st.replace(/^[^?]*\?/, '')); } catch(e){} } return q; }
+  function dest(){
+    var q = param(); var to = q.get('to') || ''; if (!new RegExp('^' + SITE.replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&') + '/').test(to)) to = SITE + '__PRODUCT_PATH__';
+    var c = {}; try { c = JSON.parse(localStorage.getItem('__CLICK_KEY__') || '{}'); } catch(e){}
+    var fresh = c.fbclid && c.at && (Date.now() - c.at) < 7 * 86400e3; // Metaのクリック帰属は7日
+    if (!fresh) return to;
+    // 店側でPixelが動く通常ページを一度踏ませてから購入手続きへ（/cart/clear はリダイレクトだけでPixelが動かない）
+    var u = new URL(to); var p = new URLSearchParams();
+    u.searchParams.forEach(function(v, k){ if (/^utm_/.test(k)) p.set(k, v); });
+    p.set('fbclid', c.fbclid); if (c.ad_content) p.set('ad_content', c.ad_content); if (c.ad_term) p.set('ad_term', c.ad_term); if (c.ad_campaign) p.set('ad_campaign', c.ad_campaign);
+    p.set('to', u.pathname + u.search);
+    return SITE + '/pages/line-go?' + p.toString();
+  }
+  try { await liff.init({ liffId: LIFF_ID }); } catch(e){}
+  var d = dest(); document.getElementById('p').innerHTML = '進まない場合は <a href="' + d + '">こちら</a>';
+  location.replace(d);
+})();
+</script></body></html>

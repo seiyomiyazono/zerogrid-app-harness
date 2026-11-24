@@ -1,0 +1,64 @@
+{%- comment -%}
+  お問い合わせページ（汎用）。tools/contact-page/build.mjs が二重の角かっこの所を店・商品の値で埋めて page.zg-contact.liquid にする。
+  店ごとの値はすべて設定（会社・ストア・商品）から入る。店の名前や連絡先をここに直に書かない。
+  項目：名前・メール・注文番号・種類・届いた日・希望の対応・新しいお届け先・本文。写真は返信メールで受け取る。
+{%- endcomment -%}
+<style>.zg-ct{max-width:640px;margin:0 auto;padding:36px 20px 60px;color:[[store.theme.text]];font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",-apple-system,sans-serif;font-size:16px;line-height:1.6}.zg-ct h1{font-size:26px;color:[[store.theme.primary]];margin:0 0 10px;font-family:inherit;letter-spacing:0}.zg-ct p.lead{font-size:15px;line-height:1.8;color:#333;margin:0 0 24px}.zg-ct label{display:block;font-weight:700;font-size:14px;margin:16px 0 6px;color:[[store.theme.primary]]}.zg-ct label i{font-style:normal;color:[[store.theme.accent]];font-size:12px;margin-left:6px}.zg-ct input,.zg-ct select,.zg-ct textarea{width:100%;box-sizing:border-box;border:1px solid [[store.theme.border]];border-radius:8px;padding:12px 14px;font-size:16px;background:#fff;color:[[store.theme.text]];font-family:inherit}.zg-ct textarea{min-height:160px}.zg-ct button{margin-top:22px;width:100%;height:52px;border:0;border-radius:10px;background:[[store.theme.accent]];color:#fff;font-size:17px;font-weight:800;cursor:pointer;font-family:inherit}.zg-ct .ok{background:#eefbf0;border:1px solid #28c100;color:#1b7a00;padding:14px;border-radius:8px;margin-bottom:18px}.zg-ct .ng{background:#fff5f5;border:1px solid #ff0000;color:#c00;padding:14px;border-radius:8px;margin-bottom:18px}.zg-ct .note{font-size:13px;color:#555;margin-top:14px;line-height:1.7}.zg-ct .opt{display:none}.zg-ct .opt.on{display:block}.zg-ct .hint{background:[[store.theme.soft]];border:1px solid [[store.theme.border]];border-radius:8px;padding:12px 14px;font-size:14px;line-height:1.75;color:#222;margin-top:12px}.zg-ct .hint b{color:[[store.theme.primary]]}.zg-ct .radio{display:flex;gap:10px;flex-wrap:wrap}.zg-ct .radio label{display:flex;align-items:center;gap:8px;font-weight:400;color:[[store.theme.text]];margin:0;border:1px solid [[store.theme.border]];border-radius:8px;padding:10px 14px;cursor:pointer}.zg-ct .radio input{width:auto;margin:0}</style>
+<div class="zg-ct">
+  <h1>お問い合わせ</h1>
+  <p class="lead">ご注文・配送・返品（[[product.guarantee_name]]）・商品についてのご質問は、こちらのフォームからお送りください。お問い合わせの種類を選ぶと、必要な項目が表示されます。</p>
+  {%- form 'contact', id: 'zg-contact' -%}
+    {%- if form.posted_successfully? -%}<div class="ok">お問い合わせいただきありがとうございます。[[store.cs_reply]]にご返信いたします。</div>{%- endif -%}
+    {%- if form.errors -%}<div class="ng">入力内容をご確認ください：{{ form.errors | default_errors }}</div>{%- endif -%}
+    <label for="zg-name">お名前（ご注文時のお名前）<i>必須</i></label><input id="zg-name" type="text" name="contact[name]" required autocomplete="name">
+    <label for="zg-email">メールアドレス（ご注文時のアドレス）<i>必須</i></label><input id="zg-email" type="email" name="contact[email]" required autocomplete="email">
+    <label for="zg-order">ご注文番号<i>必須</i></label><input id="zg-order" type="text" name="contact[ご注文番号]" required placeholder="例：#1001（ご注文確認メールに記載。ご購入前の方は「なし」）">
+    <label for="zg-type">お問い合わせの種類<i>必須</i></label>
+    <select id="zg-type" name="contact[お問い合わせの種類]" required>
+      <option value="">選択してください</option>
+      <option value="配送状況を知りたい">配送状況を知りたい</option>
+      <option value="お届け先を変更したい">お届け先を変更したい</option>
+      <option value="商品が破損・不良・足りない・違う">商品が破損・不良・足りない・違う</option>
+      <option value="使い方を知りたい">使い方を知りたい</option>
+      <option value="返品・返金したい（[[product.guarantee_name]]）">返品・返金したい（[[product.guarantee_name]]）</option>
+      <option value="注文をキャンセルしたい">注文をキャンセルしたい</option>
+[[#if c.has_subscription]]      <option value="定期便を解約・変更したい">定期便を解約・変更したい</option>
+[[/if]]      <option value="お支払い・クーポンについて">お支払い・クーポンについて</option>
+      <option value="その他">その他</option>
+    </select>
+
+    <div class="opt" data-for="商品が破損・不良・足りない・違う|返品・返金したい（[[product.guarantee_name]]）">
+      <label for="zg-arrived">商品が届いた日<i>必須</i></label><input id="zg-arrived" type="date" name="contact[商品が届いた日]">
+    </div>
+    <div class="opt" data-for="商品が破損・不良・足りない・違う">
+      <label>ご希望の対応<i>必須</i></label>
+      <div class="radio"><label><input type="radio" name="contact[ご希望の対応]" value="同じ商品を再送してほしい">同じ商品を再送してほしい</label><label><input type="radio" name="contact[ご希望の対応]" value="返金してほしい">返金してほしい</label></div>
+      <div class="hint">ご迷惑をおかけし申し訳ございません。[[#if c.defect_days_phrase]]商品到着日から[[product.defect.claim_days]]日以内のご連絡が対象です。[[/if]]状態が分かるお写真（商品と外箱）を、このあと当店からお送りする返信メールに添付してください。[[#if c.defect_return_required]]返送が必要な場合は、返送先をご案内します（送料は当店が負担します）。[[else]]<b>商品をお送り返しいただく必要はございません。</b>[[/if]]</div>
+    </div>
+    <div class="opt" data-for="返品・返金したい（[[product.guarantee_name]]）">
+      <div class="hint"><b>[[product.guarantee_name]]について</b><br>[[product.reason_sentence]]、商品到着日から[[product.use_days]]日以上お使いいただいたうえで、<b>到着日から[[c.apply_from_day]]日目〜[[product.guarantee_days]]日目</b>にお申し込みいただけます。[[#if c.early_partial]]到着日から[[product.use_days]]日以内のお申し込みは、お支払いいただいた金額の[[product.early_refund_rate]]%の返金です。[[else]]この期間外のお申し込み（未使用の場合を含む）はお受けできません。[[product.use_days]]日以内の方には、使い方のご案内をお送りします。[[/if]]返送の送料はお客さまのご負担です。</div>
+    </div>
+    <div class="opt" data-for="お届け先を変更したい">
+      <label for="zg-addr">新しいお届け先<i>必須</i></label><textarea id="zg-addr" name="contact[新しいお届け先]" style="min-height:96px" placeholder="〒000-0000&#10;都道府県・市区町村・番地・建物名・部屋番号&#10;お名前"></textarea>
+    </div>
+
+    <label for="zg-body">お問い合わせ内容<i>必須</i></label><textarea id="zg-body" name="contact[body]" required></textarea>
+    <button type="submit">送信する</button>
+    <p class="note">お問い合わせには、[[store.cs_reply]]にご返信いたします（[[operator.business_days]]）。[[#if c.phone_note]]お電話でのお問い合わせには対応しておりません。[[/if]]</p>
+  {%- endform -%}
+</div>
+<script>
+(function(){
+  var f=document.getElementById('zg-contact'); if(!f) return;
+  var sel=f.querySelector('#zg-type'); var opts=f.querySelectorAll('.opt');
+  function sync(){
+    var v=sel.value;
+    opts.forEach(function(o){
+      var on=v!=='' && o.getAttribute('data-for').split('|').indexOf(v)>-1;
+      o.classList.toggle('on',on);
+      o.querySelectorAll('input,textarea').forEach(function(i){ i.disabled=!on; if(i.type==='date'||i.tagName==='TEXTAREA'||i.type==='radio'){ i.required=on; } });
+    });
+  }
+  sel.addEventListener('change',sync); sync();
+})();
+</script>

@@ -1,0 +1,6 @@
+.vercel
+.env*
+config/
+public/img/
+public/liff/
+build/

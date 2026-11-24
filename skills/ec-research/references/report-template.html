@@ -1,0 +1,110 @@
+<title>{{商品名}} 参入パック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@700&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{--paper:#F2F5F6;--surface:#fff;--ink:#131A1E;--slate:#5C6A72;--line:#D5DEE0;--soft:#E6ECED;
+  --accent:#12706B;--warn:#A6521C;--bad:#9B3535;--good:#2C6E52}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0E1416;--surface:#161E22;--ink:#E7EEF0;--slate:#93A3A9;--line:#28353B;--soft:#1D272B;
+  --accent:#4FD1C5;--warn:#E0A263;--bad:#E08585;--good:#6FD1A0}}
+:root[data-theme="dark"]{--paper:#0E1416;--surface:#161E22;--ink:#E7EEF0;--slate:#93A3A9;--line:#28353B;--soft:#1D272B;
+  --accent:#4FD1C5;--warn:#E0A263;--bad:#E08585;--good:#6FD1A0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;font-size:15px;line-height:1.7}
+.wrap{max-width:1080px;margin:0 auto;padding:40px clamp(18px,4vw,36px) 80px}
+h1{font-family:"Zen Old Mincho","Hiragino Mincho ProN",serif;font-size:clamp(26px,3.6vw,34px);margin:0;line-height:1.25;text-wrap:balance}
+h2{font-family:"Zen Old Mincho","Hiragino Mincho ProN",serif;font-size:19px;margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate)}
+header{border-bottom:2px solid var(--ink);padding-bottom:20px}
+.hdr{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
+.sc{font-family:"IBM Plex Mono",monospace;font-size:62px;font-weight:600;line-height:.9;color:var(--accent)}
+.sc small{font-size:19px;color:var(--slate)}
+.pill{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;padding:3px 9px;border-radius:2px;white-space:nowrap}
+.p-good{border:1px solid var(--good);color:var(--good)}
+.p-warn{border:1px solid var(--warn);color:var(--warn)}
+.p-bad{border:1px solid var(--bad);color:var(--bad)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border:1px solid var(--line);border-top:0;background:var(--surface)}
+.tile{padding:16px 18px;border-right:1px solid var(--soft)}
+.tile:last-child{border-right:0}
+.tile .n{font-family:"IBM Plex Mono",monospace;font-size:26px;font-weight:600;line-height:1.1}
+.tile .n span{font-size:14px}
+.tile .l{font-size:11.5px;color:var(--slate);margin-top:2px}
+.tile .s{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--slate);opacity:.75}
+section{margin-top:34px}
+.shead{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--ink);padding-bottom:7px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:var(--surface);min-width:640px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--soft);vertical-align:top}
+thead th{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--slate);font-weight:500;background:var(--soft);white-space:nowrap}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dn{color:var(--bad)}.ng{color:var(--bad)}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.bar{display:inline-block;width:64px;height:5px;background:var(--soft);border-radius:3px;overflow:hidden;vertical-align:middle;margin-left:8px}
+.bar i{display:block;height:100%;background:var(--accent)}
+.bar i.lo{background:var(--warn)}
+.hint{font-size:11.5px;color:var(--slate);margin-top:7px}
+.flag{padding:13px 14px;background:color-mix(in srgb,var(--warn) 12%,transparent);border-left:3px solid var(--warn);font-size:13px;margin-top:12px}
+</style>
+
+<div class="wrap">
+
+<!-- ============ ヘッダー: 商品名・スコア・判定 ============ -->
+<header>
+  <div class="hdr">
+    <div>
+      <p class="eyebrow" style="margin:0 0 6px">ec-research v5.2 ／ {{実測日}}</p>
+      <h1>{{商品名}}</h1>
+      <p style="margin:5px 0 0;color:var(--slate);font-size:13.5px">{{一行スペック}}／想定 単品{{価格}}</p>
+    </div>
+    <div style="text-align:right">
+      <!-- 80以上=var(--accent) / 未満=var(--warn) -->
+      <div class="sc">{{点}}<small> /100</small></div>
+      <div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap">
+        <span class="pill p-good">{{判定}}</span><span class="pill p-warn">{{条件}}</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 数字タイル4枚: 市場のデカさを先頭に ============ -->
+<div class="tiles">
+  <div class="tile"><div class="n">{{数字}}<span>{{単位}}</span></div><div class="l">{{市場規模の指標}}</div><div class="s">{{出所}} ①</div></div>
+  <div class="tile"><div class="n">{{数字}}<span>{{単位}}</span></div><div class="l">{{需要の証拠}}</div><div class="s">{{出所}} ①</div></div>
+  <div class="tile"><div class="n">{{n}}<span>社</span></div><div class="l">同一商品のDS競合</div><div class="s">実測 ①</div></div>
+  <div class="tile"><div class="n">{{n}}<span>日</span></div><div class="l">最長継続</div><div class="s">Hookd ①</div></div>
+</div>
+
+<!-- 01 競合サイト: 訪問数・Rank・広告本数・ストア年齢・価格を必ず列に持つ -->
+<!-- 02 native ads 上位3本: 型 / フック / 語り手 / 継続 / share_url -->
+<!-- 03 advertorial 上位3本: 型 / 実URL / 出所。0本なら .flag(bad) で理由と減点を書く -->
+<!-- 04 VSL 上位3本: 型 / 冒頭 / 尺 / 出所 -->
+<!-- 05 広告アカウント Top3: 現役/停止 / 最長継続 / perf / 効いている点 -->
+<!-- 06 日本: Meta広告ライブラリJP / 楽天 / 市場規模 / 薬機法 の4行 -->
+<!-- 07 スコア: 7軸＋合計。バーは .bar、80未満の軸は i.lo -->
+<!-- 08 参入コンセプト: 問題側UM / 解決側UM / ファネル / オファー / 語り手 / 禁止表現 の6行＋.flag に「成否を決める一行」 -->
+<!-- 09 ネクストアクション: # / やること / なぜ -->
+
+<section>
+  <div class="shead"><span class="eyebrow">01</span><h2>競合サイト</h2></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>ブランド</th><th>ドメイン</th><th>月間訪問</th><th>Global Rank</th><th>広告</th><th>最長継続</th><th>ストア年齢</th><th>価格</th></tr></thead>
+    <tbody>
+      <tr><td>{{ブランド}}</td><td class="mono"><a href="https://{{d}}" target="_blank" rel="noopener">{{d}}</a></td><td class="n">{{訪問数}}</td><td class="n">#{{rank}} <span class="dn">↓</span></td><td class="n">{{本}}</td><td class="n">{{日}}</td><td class="n">{{日}}</td><td class="n">{{価格}}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint">訪問数の出所と信頼度ラベル（①実測／②間接／③推定）、未取得なら理由を必ず書く。</p>
+</section>
+
+</div>
+
+<!--
+  規格（`report-requirements.md` / `metrics.md` が正）
+  - 散文を書かない。表とタイルだけで組む。地の文は .hint と .flag のみ
+  - 数字には必ず信頼度ラベル ①実測 / ②間接 / ③推定 を付ける
+  - 埋まらない枠は空欄にせず「未取得＋理由」と赤字で書く
+  - 3枠(native/advertorial/VSL)は各3本を必ず立てる。0本ならその事実と減点を書く
+  - 色・余白・フォントはこのファイルのCSSをそのまま使う（毎回同じ型で出す）
+-->
